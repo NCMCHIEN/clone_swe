@@ -1,0 +1,88 @@
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  /* padding: 40px; */
+  box-sizing: border-box;
+  text-align: center;
+  /* background-color: aqua; */
+}
+.product-img {
+  width: 350px;
+  height: 350px;
+  position: relative;
+  overflow: hidden;
+}
+
+.container li {
+  width: calc(25% - 20px);
+  margin-right: 20px;
+  margin-bottom: 20px;
+  position: relative; /* Thêm position relative để có thể canh chỉnh vị trí của .item-img-2 */
+}
+
+.container li:last-child {
+  margin-right: 0;
+}
+.item-img-1 img {
+  background-color: rgb(4, 19, 19);
+
+  width: 100%;
+  /* height: 120px; */
+  background-color: #333;
+  position: relative;
+}
+
+.item-img-2 {
+  width: 100%;
+  height: 120px;
+  background-color: aliceblue;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.3s ease; /* Thêm hiệu ứng chuyển động */
+}
+.item-img-1:hover .item-img-2 {
+  opacity: 1;
+}
+.product-info {
+  width: 520%;
+  height: 100%;
+  /* background-color: red; */
+  display: flex;
+  justify-content: space-around;
+}
+.name-product a {
+  text-decoration: none;
+  color: black;
+}
+.name-product:hover a {
+  text-decoration: none;
+  color: black;
+}
+.name-product p {
+  position: relative;
+  font-size: 16px;
+  margin: auto;
+  font-weight: 600;
+  top: 10px;
+  padding-left: 50px;
+  text-transform: uppercase; /* Chuyển đổi thành chữ in hoa */
+}
+
+.price-product {
+  padding-right: 50px;
+}
+.price-product-sale {
+  font-weight: bold;
+  color: #000;
+  font-size: 15px;
+  margin: auto;
+}
+.price-product-offer {
+  text-decoration: line-through;
+  font-size: 15px;
+  font-weight: bold;
+  color: #999999;
+}

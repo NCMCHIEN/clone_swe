@@ -1,0 +1,118 @@
+.login-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 580px;
+}
+.sign-in {
+  text-align: center;
+  font-size: 26px;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 20px;
+  width: 410px;
+}
+.sign-in input {
+  font-size: 16px;
+  background: #fff;
+  border: 1px solid #777;
+  color: #777;
+  width: 381px;
+  height: 38px;
+  padding: 0 12px 0 15px;
+}
+.customer-sign-in {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.btn-sign-in {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.continue-signin {
+  font-size: 16px;
+  margin-left: 13px;
+  text-transform: lowercase;
+  border-radius: 7px;
+  width: 75px;
+  text-align: center;
+  padding: 6px;
+  height: initial;
+  line-height: initial;
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  transition: all 300ms ease-in-out;
+}
+.forget-pass {
+  font-size: 16px;
+  margin-right: 10px;
+  text-transform: lowercase;
+  border-radius: 7px;
+  width: 185px;
+  /* text-align: center; */
+  padding: 6px;
+  /* height: initial; */
+  line-height: initial;
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  transition: all 300ms ease-in-out;
+}
+.continue-signin:hover,
+.forget-pass:hover {
+  background-color: white;
+  color: #000;
+}
+.register {
+  text-align: center;
+  font-size: 26px;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 20px;
+  width: 410px;
+}
+.register input {
+  font-size: 16px;
+  background: #fff;
+  border: 1px solid #777;
+  color: #777;
+  width: 381px;
+  height: 38px;
+  padding: 0 12px 0 15px;
+}
+.customer-register {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+.btn-register {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.continue-createacc {
+  /* margin-right: 10px; */
+  font-size: 16px;
+  text-transform: lowercase;
+  border-radius: 7px;
+  width: 145px;
+  text-align: center;
+  padding: 6px;
+  height: initial;
+  line-height: initial;
+  background-color: #000;
+  color: white;
+  font-weight: bold;
+  transition: all 300ms ease-in-out;
+}

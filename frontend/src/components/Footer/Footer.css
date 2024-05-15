@@ -1,0 +1,48 @@
+.swe-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Thêm align-items để canh nội dung theo chiều dọc */
+  text-align: center;
+  margin: auto;
+  padding: 20px 10px 10px; /* Tích hợp padding thành một dòng */
+  z-index: 1;
+  background-color: white;
+}
+
+.footer-social {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 30px;
+}
+.footer-social p {
+  font-size: 16px;
+  font-weight: bold;
+  max-width: 100px;
+}
+.footer-logo {
+  display: inline-block;
+  margin-left: 140px;
+}
+
+.footer-logo img {
+  width: 316px;
+  align-items: center; /* Thêm align-items để canh nội dung theo chiều dọc */
+  text-align: center;
+
+  height: 22px;
+  margin: auto;
+}
+.footer-info {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+.footer-info p {
+  font-size: 16px;
+  font-weight: bold;
+  max-width: 120px;
+}
