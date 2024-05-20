@@ -75,12 +75,16 @@
   /* font-weight: bold; */
   max-width: 100px;
 }
+.nav-sign p:hover {
+  color: orange;
+}
 .logout {
   cursor: pointer;
 }
 .logout:hover {
   color: orange;
 }
+
 .pop-up {
   width: 0px;
 }
@@ -138,6 +142,11 @@
 .pop-up.active .content {
   opacity: 1; /* Khi active, opacity là 1 */
   transform: translate(50%, -50%) scale(1); /* Khi active, scale lớn hơn */
+}
+.product-render {
+  display: grid;
+  grid-template-columns: 1fr; /* Chia thành một cột duy nhất */
+  gap: 20px; /* Khoảng cách giữa các sản phẩm */
 }
 .pop-up-bag {
   padding: 20px;

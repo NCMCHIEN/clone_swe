@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ListProduct.css";
 import cross_icon from "../../assets/cross_icon.png";
+
 const ListProduct = () => {
   const [allproducts, setAllProducts] = useState([]);
 
@@ -11,6 +12,7 @@ const ListProduct = () => {
         setAllProducts(data);
       });
   };
+
   useEffect(() => {
     fetchInfo();
   }, []);
@@ -27,6 +29,7 @@ const ListProduct = () => {
     });
     await fetchInfo();
   };
+
   return (
     <div className="list-product">
       <h1>All products list</h1>
@@ -36,34 +39,32 @@ const ListProduct = () => {
         <p>Old Price</p>
         <p>New Price</p>
         <p>Category</p>
+        <p>Quantity</p>
         <p>Remove</p>
       </div>
       <div className="listproduct-allproducts">
         <hr />
-        {allproducts.map((product, index) => {
-          return (
-            <>
-              <div
-                key={index}
-                className="listproduct-format-main listproduct-format"
-              >
-                <img className="listproduct-product-icon" src={product.image} />
-                <p>{product.name}</p>
-                <p>${product.old_price}</p>
-                <p>${product.new_price}</p>
-                <p>{product.category}</p>
-                <img
-                  onClick={() => {
-                    remove_product(product.id);
-                  }}
-                  className="listproduct-remove-icon"
-                  src={cross_icon}
-                />
-              </div>
-              <hr />
-            </>
-          );
-        })}
+        {allproducts.map((product, index) => (
+          <React.Fragment key={index}>
+            <div className="listproduct-format-main listproduct-format">
+              <img className="listproduct-product-icon" src={product.image} alt={product.name} />
+              <p>{product.name}</p>
+              <p>${product.old_price}</p>
+              <p>${product.new_price}</p>
+              <p>{product.category}</p>
+              <p className="listproduct-quantity">{product.quantity}</p>
+              <img
+                onClick={() => {
+                  remove_product(product.id);
+                }}
+                className="listproduct-remove-icon"
+                src={cross_icon}
+                alt="Remove"
+              />
+            </div>
+            <hr />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );

@@ -9,10 +9,17 @@ const Navbar = () => {
   const { getTotalCartItems } = useContext(ShopContext);
   const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
     useContext(ShopContext);
+  // const handleSearch = () => {
+  //   // Lấy giá trị từ trường input tìm kiếm và thực hiện tìm kiếm tại đây
+  //   const searchValue = document.getElementById("search-input").value;
+  //   console.log("Từ khóa tìm kiếm:", searchValue);
+  //   // Thực hiện tìm kiếm sản phẩm...
+  // };
+
   return (
     <div className="swe-header">
       <div className="nav-menu">
-        <Link to="/hoalen">
+        <Link to="/mens">
           <p>men's</p>
         </Link>
         <Link to="/womens">
@@ -27,6 +34,7 @@ const Navbar = () => {
         <Link to="/accessories">
           <p>accessories</p>
         </Link>
+        {/* <Link to="/Item">item</Link> */}
       </div>
       <div className="nav-logo">
         <Link to="/">
@@ -38,7 +46,8 @@ const Navbar = () => {
       </div>
       <div className="nav-sign">
         {localStorage.getItem("auth-token") ? (
-          <p className="logout"
+          <p
+            className="logout"
             onClick={() => {
               localStorage.removeItem("auth-token");
               window.location.replace("/");
@@ -51,67 +60,70 @@ const Navbar = () => {
             <p>account</p>
           </Link>
         )}
-        <Link style={{ textDecoration: "none" }} to="/cart">
-          <img src={cart_icon} alt="" />
-        </Link>
+
         <p>search</p>
         <p className="nav-sign-button" onClick={openPopup}>
           bag ({getTotalCartItems()})
         </p>
+        <Link style={{ textDecoration: "none" }} to="/cart">
+          <img src={cart_icon} alt="" />
+        </Link>
         {/* pop up bag  */}
         <div className="pop-up" id="pop-up-1">
           <div className="overlay">
-            {all_product.map((product) => {
-              if (cartItems[product.id] > 0) {
-                return (
-                  <div className="content" key={product.id}>
-                    <div className="close-btn" onClick={openPopup}>
-                      close
-                    </div>
-                    <h1>shopping bag</h1>
-                    <hr />
-                    <div className="pop-up-bag">
-                      <div className="pop-up-bag-img">
-                        <img src={product.image} alt="" />
+            <div className="product-render">
+              {all_product.map((product) => {
+                if (cartItems[product.id] > 0) {
+                  return (
+                    <div className="content" key={product.id}>
+                      <div className="close-btn" onClick={openPopup}>
+                        close
                       </div>
-                      <div className="pop-up-bag-name">
-                        <p>{product.name}</p>
-                        <p>{cartItems[product.id]}</p>
+                      <h1>shopping bag</h1>
+                      <hr />
+                      <div className="pop-up-bag">
+                        <div className="pop-up-bag-img">
+                          <img src={product.image} alt="" />
+                        </div>
+                        <div className="pop-up-bag-name">
+                          <p>{product.name}</p>
+                          <p>{cartItems[product.id]}</p>
+                        </div>
+                        <div className="pop-up-bag-price">
+                          <button onClick={() => removeFromCart(product.id)}>
+                            &times;
+                          </button>
+                          <p>{product.new_price}vnd</p>
+                        </div>
                       </div>
-                      <div className="pop-up-bag-price">
-                        <button onClick={() => removeFromCart(product.id)}>
-                          &times;
-                        </button>
-                        <p>{product.new_price}vnd</p>
+                      <hr />
+                      <div className="total">
+                        <div className="total-left">
+                          total
+                          <br />
+                          shipping calculated at checkout
+                        </div>
+                        <div className="total-right">
+                          {product.new_price * cartItems[product.id]}vnd
+                        </div>
                       </div>
-                    </div>
-                    <hr />
-                    <div className="total">
-                      <div className="total-left">
-                        total
-                        <br />
-                        shipping calculated at checkout
-                      </div>
-                      <div className="total-right">
-                        {product.new_price * cartItems[product.id]}vnd
-                      </div>
-                    </div>
-                    <div className="button-detail-bag">
-                      <Link to="/" onClick={openPopup}>
-                        <button className="button-detail-continueshopping">
-                          continue shopping
-                        </button>
-                      </Link>
+                      <div className="button-detail-bag">
+                        <Link to="/" onClick={openPopup}>
+                          <button className="button-detail-continueshopping">
+                            continue shopping
+                          </button>
+                        </Link>
 
-                      <button className="button-detail-checkout">
-                        checkout
-                      </button>
+                        <button className="button-detail-checkout">
+                          checkout
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                );
-              }
-              return null;
-            })}
+                  );
+                }
+                return null;
+              })}
+            </div>
           </div>
         </div>
 

@@ -42,7 +42,7 @@ app.post("/upload", upload.single("product"), (req, res) => {
   });
 });
 
-// schema cho crreating prduct
+// schema cho creating product
 const Product = mongoose.model("Product", {
   id: {
     type: Number,
@@ -72,12 +72,17 @@ const Product = mongoose.model("Product", {
     type: Date,
     default: Date.now,
   },
-  avilable: {
+  available: {
     type: Boolean,
     default: true,
   },
+  quantity: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
 });
-//them sp
+// them sp
 app.post("/addproduct", async (req, res) => {
   let products = await Product.find({});
   let id;
@@ -95,6 +100,7 @@ app.post("/addproduct", async (req, res) => {
     category: req.body.category,
     new_price: req.body.new_price,
     old_price: req.body.old_price,
+    quantity: req.body.quantity,
   });
   console.log(product);
   await product.save();
@@ -105,7 +111,7 @@ app.post("/addproduct", async (req, res) => {
   });
 });
 
-//xoa sp
+// xoa sp
 app.post("/removeproduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
   console.log("removed");
@@ -115,7 +121,7 @@ app.post("/removeproduct", async (req, res) => {
   });
 });
 
-//api lay tat ca sp
+// api lay tat ca sp
 app.get("/allproducts", async (req, res) => {
   let products = await Product.find({});
   console.log("all product fetched");
@@ -170,7 +176,7 @@ app.post("/signup", async (req, res) => {
   res.json({ success: true, token });
 });
 
-//tao endpoint cho user dnhap
+// tao endpoint cho user dnhap
 app.post("/login", async (req, res) => {
   let user = await Users.findOne({ email: req.body.email });
   if (user) {
@@ -198,8 +204,7 @@ app.get("/newcollection", async (req, res) => {
   console.log("new collection fetched");
   res.send(newcollection);
 });
-
-//tao endpoint cho popular women
+// tao endpoint cho popular women
 app.get("/popularinwomen", async (req, res) => {
   let products = await Product.find({ category: "women" });
   let popular_in_women = products.slice(0, 4);
@@ -207,23 +212,23 @@ app.get("/popularinwomen", async (req, res) => {
   res.send(popular_in_women);
 });
 
-//tao middleware de fetch user
+// tao middleware de fetch user
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
-    res.status(401).send({ errors: "Please" });
+    res.status(401).send({ errors: "Please provide a valid token" });
   } else {
     try {
       const data = jwt.verify(token, "secret_ecom");
       req.user = data.user;
       next();
     } catch (error) {
-      res.status(401).sned({ errors: "please using valid token" });
+      res.status(401).send({ errors: "Invalid token" });
     }
   }
 };
 
-//tao endpoint add sp vao cartdata
+// tao endpoint add sp vao cartdata
 app.post("/addtocart", fetchUser, async (req, res) => {
   console.log("added", req.body.itemId);
   let userData = await Users.findOne({ _id: req.user.id });
@@ -235,7 +240,7 @@ app.post("/addtocart", fetchUser, async (req, res) => {
   res.send("Added");
 });
 
-//tao endpoint de xoa sp o cartdata
+// tao endpoint de xoa sp o cartdata
 app.post("/removefromcart", fetchUser, async (req, res) => {
   console.log("removed", req.body.itemId);
   let userData = await Users.findOne({ _id: req.user.id });
@@ -248,16 +253,88 @@ app.post("/removefromcart", fetchUser, async (req, res) => {
   res.send("Removed");
 });
 
-//tao endpoint de lay cartitem
+// tao endpoint de lay cartitem
 app.post("/getcart", fetchUser, async (req, res) => {
   console.log("get cart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
 
+// schema cho Order
+const Order = mongoose.model("Order", {
+  userId: {
+    type: String,
+    required: true,
+  },
+  items: [
+    {
+      productId: String,
+      quantity: Number,
+      price: Number,
+    },
+  ],
+  phoneNumber: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+// Endpoint để xử lý mua hàng
+app.post("/purchase", fetchUser, async (req, res) => {
+  const { items, phoneNumber, address } = req.body;
+  const userId = req.user.id;
+
+  if (!phoneNumber || !address) {
+    return res.status(400).json({
+      success: false,
+      message: "Phone number and address are required",
+    });
+  }
+
+  try {
+    // Lưu đơn hàng vào database
+    const order = new Order({
+      userId,
+      items,
+      phoneNumber,
+      address,
+    });
+    await order.save();
+
+    // Cập nhật số lượng sản phẩm trong kho
+    for (const item of items) {
+      const product = await Product.findOne({ id: item.productId });
+      if (product) {
+        if (product.quantity >= item.quantity) {
+          product.quantity -= item.quantity;
+          await product.save();
+        } else {
+          return res.status(400).json({
+            success: false,
+            message: `Not enough quantity for product ID ${item.productId}`,
+          });
+        }
+      }
+    }
+
+    res.json({ success: true, message: "Purchase successful!" });
+  } catch (error) {
+    console.error("Error during purchase:", error);
+    res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+});
+
 app.listen(port, (error) => {
   if (!error) {
-    console.log("ket noi chay o port" + port);
+    console.log("ket noi chay o port " + port);
   } else {
     console.log("error chua ket noi" + error);
   }

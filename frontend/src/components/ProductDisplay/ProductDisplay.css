@@ -26,14 +26,12 @@
   height: 1px;
   background: #999;
 }
-.price-product {
-  display: flex;
-  justify-content: flex-start;
+.price-product-saleoffer {
   margin-top: 10px;
 }
 .price-product-sale {
   color: #000;
-  width: 200px;
+  /* width: 200px; */
 }
 .price-product-offer {
   text-decoration: line-through;

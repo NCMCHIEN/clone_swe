@@ -12,21 +12,18 @@ export const ProductDisplay = (props) => {
       {/* <!-- left  --> */}
       <div class="display-left-content">
         <p>
-          <img
-            src="https://product.hstatic.net/1000344185/product/tram0508-recovered_f586a5875c0744f496cfd6e6cfda9560_master.jpg"
-            alt=""
-          />
+          <img src={product.image} />
         </p>
       </div>
       {/* <!-- end left  --> */}
       {/* <!-- right --> */}
       <div class="display-right-content">
-        <h2>SIGNAL BABY TEE - RED</h2>
+        <h2>{product.name}</h2>
         <hr />
-        <h2 class="price-product">
-          <p class="price-product-sale">400.000 vnd</p>
-          <p class="price-product-offer">500.000 vnd</p>
-        </h2>
+        <div class="price-product-saleoffer">
+          <p class="price-product-sale">{product.new_price} VND</p>
+          <p class="price-product-offer">{product.old_price} VND</p>
+        </div>
         <div class="select-size">
           <p>please select size</p>
           <div class="select-size-button">
@@ -35,6 +32,7 @@ export const ProductDisplay = (props) => {
             <button>L</button>
             <button>XL</button>
           </div>
+          <p>Số lượng còn: {product.quantity}</p>
         </div>
         <div class="button-detail">
           <button
@@ -49,13 +47,13 @@ export const ProductDisplay = (props) => {
         </div>
         <hr />
         <div class="infoabout-shirt">
-          | SWE® | CORE TEE <br />
+          | SWE® | {product.name} <br />
           COLOR: BLACK <br />
           MATERIAL: COTTON 100% <br />
           SIZE: S/M/L/XL
           <br />
           <br />
-          CORE TEE - Chiếc áo với thiết kế dễ thương nằm trong SWE Summer
+          {product.name} - Chiếc áo với thiết kế dễ thương nằm trong SWE Summer
           Collection 2024. Áo có hoạ tiết trái tim được in tràn viền rất bắt mắt
           và nổi bật cùng điểm nhấn chữ Kid Atelier được in phía trên ngực trái.
           Đây chắc chắn sẽ là một sản phẩm rất phù hợp dành cho các cặp đôi.

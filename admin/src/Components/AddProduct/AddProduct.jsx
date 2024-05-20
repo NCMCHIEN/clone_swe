@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./AddProduct.css";
 import upload_area from "../../assets/upload_area.svg";
+
 const AddProduct = () => {
   const [image, setImage] = useState(false);
   const [productDetails, setProductDetails] = useState({
@@ -9,16 +10,20 @@ const AddProduct = () => {
     category: "women",
     new_price: "",
     old_price: "",
+    quantity: "", // Add quantity to productDetails state
   });
-  //logic để hiện thị hình up lên trong input file
+
+  // logic để hiện thị hình up lên trong input file
   const imageHandler = (e) => {
     setImage(e.target.files[0]);
   };
-  //logic để update sản phẩm
+
+  // logic để update sản phẩm
   const changeHandler = (e) => {
     setProductDetails({ ...productDetails, [e.target.name]: e.target.value });
   };
-  //logic kết nói tới be
+
+  // logic kết nói tới be
   const Add_Product = async () => {
     console.log(productDetails);
     let responseData;
@@ -26,7 +31,7 @@ const AddProduct = () => {
 
     let formData = new FormData();
     formData.append("product", image);
-    //gửi tới api
+    // gửi tới api
     await fetch("http://localhost:4005/upload", {
       method: "POST",
       headers: {
@@ -55,7 +60,8 @@ const AddProduct = () => {
         });
     }
   };
-  //end ket noi toi be
+
+  // end kết nối tới be
   return (
     <div className="add-product">
       <div className="addproduct-itemfield">
@@ -89,6 +95,16 @@ const AddProduct = () => {
             placeholder="Type here"
           />
         </div>
+      </div>
+      <div className="addproduct-itemfield">
+        <p>Quantity</p> {/* Add quantity input field */}
+        <input
+          value={productDetails.quantity}
+          onChange={changeHandler}
+          type="number"
+          name="quantity"
+          placeholder="Type here"
+        />
       </div>
       <div className="addproduct-itemfield">
         <p>Product Category</p>

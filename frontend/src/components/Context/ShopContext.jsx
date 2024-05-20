@@ -1,17 +1,19 @@
 import React, { createContext, useEffect, useState } from "react";
 
 export const ShopContext = createContext(null);
+
 const getDefaultCart = () => {
   let cart = {};
-  for (let index = 0; index < 300 + 1; index++) {
+  for (let index = 0; index <= 300; index++) {
     cart[index] = 0;
   }
   return cart;
 };
+
 const ShopContextProvider = (props) => {
   const [all_product, setAll_Product] = useState([]);
-
   const [cartItems, setCartItems] = useState(getDefaultCart());
+
   useEffect(() => {
     fetch("http://localhost:4005/allproducts")
       .then((response) => response.json())
@@ -30,6 +32,7 @@ const ShopContextProvider = (props) => {
         .then((data) => setCartItems(data));
     }
   }, []);
+
   const addToCart = (itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] + 1 }));
     if (localStorage.getItem("auth-token")) {
@@ -73,9 +76,8 @@ const ShopContextProvider = (props) => {
         );
         totalAmount += itemInfo.new_price * cartItems[item];
       }
-      // Move return totalAmount outside of the loop
     }
-    return totalAmount; // Return totalAmount after the loop
+    return totalAmount;
   };
 
   const getTotalCartItems = () => {
@@ -87,6 +89,12 @@ const ShopContextProvider = (props) => {
     }
     return totalItem;
   };
+
+  // Hàm để xóa toàn bộ giỏ hàng
+  const clearCart = () => {
+    setCartItems(getDefaultCart());
+  };
+
   const contextValue = {
     all_product,
     cartItems,
@@ -94,6 +102,7 @@ const ShopContextProvider = (props) => {
     removeFromCart,
     getTotalCartAmount,
     getTotalCartItems,
+    clearCart, // Bao gồm hàm clearCart trong context
   };
 
   return (
@@ -102,4 +111,5 @@ const ShopContextProvider = (props) => {
     </ShopContext.Provider>
   );
 };
+
 export default ShopContextProvider;

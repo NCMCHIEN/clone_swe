@@ -1,12 +1,30 @@
-.container {
+/* Thiết lập margin và padding cho .item */
+.item {
+  width: 100%;
+  /* Sử dụng chiều cao full màn hình */
+  /* height: 100vh; */
+  padding: 0;
+  margin: 0;
+  /* background-color: red; */
+}
+
+/* Thiết lập flexbox cho .container-item */
+.container-item > ul {
+  margin: 0;
+}
+.container-item {
+  min-width: 100%;
   display: flex;
   flex-wrap: wrap;
   list-style: none;
-  /* padding: 40px; */
   box-sizing: border-box;
   text-align: center;
   /* background-color: aqua; */
 }
+.products {
+  /* background-color: #999999; */
+}
+/* Định dạng ảnh sản phẩm */
 .product-img {
   width: 350px;
   height: 350px;
@@ -14,72 +32,98 @@
   overflow: hidden;
 }
 
-.container li {
+/* Định dạng các mục trong .container-item */
+.container-item li {
   width: calc(25% - 20px);
   margin-right: 20px;
   margin-bottom: 20px;
-  position: relative; /* Thêm position relative để có thể canh chỉnh vị trí của .item-img-2 */
-}
-
-.container li:last-child {
-  margin-right: 0;
-}
-.item-img-1 img {
-  background-color: rgb(4, 19, 19);
-
-  width: 100%;
-  /* height: 120px; */
-  background-color: #333;
   position: relative;
 }
 
+/* Loại bỏ margin-right cho phần tử cuối cùng trong .container-item */
+.container-item li:last-child {
+  margin-right: 0;
+}
+
+/* Thiết lập định dạng cho ảnh chính trong sản phẩm */
+.item-img-1 img {
+  width: 100%;
+  position: relative;
+}
+
+/* Thiết lập định dạng cho ảnh phụ khi hover */
 .item-img-2 {
   width: 100%;
   height: 120px;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
   position: absolute;
   top: 0;
   left: 0;
   opacity: 0;
-  transition: opacity 0.3s ease; /* Thêm hiệu ứng chuyển động */
+  transition: opacity 0.3s ease;
 }
+
+/* Hiển thị ảnh phụ khi hover */
 .item-img-1:hover .item-img-2 {
   opacity: 1;
 }
+
+/* Định dạng phần thông tin sản phẩm */
 .product-info {
-  width: 520%;
-  height: 100%;
-  /* background-color: red; */
   display: flex;
-  justify-content: space-around;
+  flex-direction: row; /* Hiển thị các phần tử con theo chiều ngang */
+  justify-content: space-around; /* Canh giữa các phần tử theo chiều ngang */
+  align-items: center; /* Canh giữa các phần tử theo chiều dọc */
+  height: 100%; /* Chiều cao 100% của item */
 }
+
+/* Định dạng cho tên sản phẩm */
 .name-product a {
   text-decoration: none;
   color: black;
 }
+
+/* Định dạng cho tên sản phẩm khi hover */
 .name-product:hover a {
   text-decoration: none;
   color: black;
 }
+
+/* Định dạng cho các mục trong phần thông tin sản phẩm */
 .name-product p {
-  position: relative;
+  min-width: 156px;
+  width: 110px;
+  /* position: relative; */
   font-size: 16px;
   margin: auto;
   font-weight: 600;
-  top: 10px;
-  padding-left: 50px;
-  text-transform: uppercase; /* Chuyển đổi thành chữ in hoa */
+  /* top: 10px; */
+  /* padding-left: 50px; */
+  text-transform: uppercase;
 }
 
+/* Định dạng cho giá sản phẩm */
 .price-product {
-  padding-right: 50px;
+  display: flex;
+  flex-direction: column; /* Hiển thị các phần tử con theo chiều dọc */
+  justify-content: flex-end; /* Canh giữa theo chiều dọc */
+  align-items: end; /* Canh giữa theo chiều ngang */
+  text-align: end;
+  margin-top: 10px; /* Khoảng cách giữa tên sản phẩm và giá */
 }
+
+.price-product p {
+  margin: 5px 0; /* Khoảng cách giữa các phần tử trong price-product */
+}
+/* Định dạng cho giá sản phẩm khi đang được giảm giá */
 .price-product-sale {
   font-weight: bold;
   color: #000;
   font-size: 15px;
   margin: auto;
 }
+
+/* Định dạng cho giá sản phẩm khi không có giảm giá */
 .price-product-offer {
   text-decoration: line-through;
   font-size: 15px;
