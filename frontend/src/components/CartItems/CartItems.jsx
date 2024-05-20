@@ -40,8 +40,22 @@ export const CartItems = () => {
         throw new Error(errorData.message || "Network response was not ok");
       }
 
+      // Cập nhật số lượng sản phẩm đã bán (sold)
+      cartProducts.forEach(async (product) => {
+        const updatedSold = product.sold + cartItems[product.id];
+        await fetch(`http://localhost:4005/updateproductsold/${product.id}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          body: JSON.stringify({ sold: updatedSold }),
+        });
+      });
+
       const result = await response.json();
       alert("Purchase successful!");
+
       clearCart(); // Gọi hàm clearCart để xóa toàn bộ giỏ hàng
     } catch (error) {
       console.error("Error during purchase:", error);

@@ -13,6 +13,7 @@ const getDefaultCart = () => {
 const ShopContextProvider = (props) => {
   const [all_product, setAll_Product] = useState([]);
   const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [searchTerm, setSearchTerm] = useState(""); // Thêm trạng thái tìm kiếm
 
   useEffect(() => {
     fetch("http://localhost:4005/allproducts")
@@ -90,7 +91,6 @@ const ShopContextProvider = (props) => {
     return totalItem;
   };
 
-  // Hàm để xóa toàn bộ giỏ hàng
   const clearCart = () => {
     setCartItems(getDefaultCart());
   };
@@ -102,7 +102,9 @@ const ShopContextProvider = (props) => {
     removeFromCart,
     getTotalCartAmount,
     getTotalCartItems,
-    clearCart, // Bao gồm hàm clearCart trong context
+    clearCart,
+    searchTerm, // Thêm searchTerm vào context
+    setSearchTerm, // Thêm setSearchTerm vào context
   };
 
   return (

@@ -1,14 +1,14 @@
 import React, { useEffect, useContext, useState } from "react";
-import "./NewCollections.css";
+import "./BestSellers.css";
 import Item from "../Item/Item";
 import { ShopContext } from "../Context/ShopContext";
 
-export const NewCollections = () => {
+export const BestSellers = () => {
   const [newCollection, setNewCollection] = useState([]);
   const { searchTerm } = useContext(ShopContext);
 
   useEffect(() => {
-    fetch("http://localhost:4005/newcollection")
+    fetch("http://localhost:4005/bestsellers")
       .then((response) => response.json())
       .then((data) => setNewCollection(data));
   }, []);
@@ -18,10 +18,10 @@ export const NewCollections = () => {
   );
 
   return (
-    <div className="new-collections">
-      <h1>NEW COLLECTIONS</h1>
+    <div className="new-bestsellers">
+      <h1>NEW bestsellers</h1>
       <hr />
-      <div className="collections">
+      <div className="bestsellers">
         {filteredCollection.map((item, i) => (
           <Item
             key={i}

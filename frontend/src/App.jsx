@@ -12,6 +12,7 @@ import women_banner from "./components/Assets/banner_women.png";
 import kid_banner from "./components/Assets/banner_kids.png";
 import Item from "./components/Item/Item";
 import { NewCollections } from "./components/NewCollections/NewCollections";
+import { BestSellers } from "./components/BestSellers/BestSellers";
 import { CartItems } from "./components/CartItems/CartItems";
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           />
           <Route path="/Item" element={<Item />} />
           <Route path="/NewCollections" element={<NewCollections />} />
+          <Route path="/BestSellers" element={<BestSellers />} />
           <Route path="product" element={<Product />}>
             <Route path=":productId" element={<Product />} />
           </Route>

@@ -1,20 +1,18 @@
 import React, { useContext, useState } from "react";
 import "./Navbar.css";
 import cart_icon from "../Assets/cart_icon.png";
-import { Link } from "react-router-dom"; // import Link từ react-router-dom
+import { Link } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
+import SearchBar from "../SearchBar/SearchBar";
 
 const Navbar = () => {
-  const [menu, setMenu] = useState("shop");
-  const { getTotalCartItems } = useContext(ShopContext);
-  const { all_product, cartItems, removeFromCart, getTotalCartAmount } =
+  const { getTotalCartItems, searchTerm, setSearchTerm } =
     useContext(ShopContext);
-  // const handleSearch = () => {
-  //   // Lấy giá trị từ trường input tìm kiếm và thực hiện tìm kiếm tại đây
-  //   const searchValue = document.getElementById("search-input").value;
-  //   console.log("Từ khóa tìm kiếm:", searchValue);
-  //   // Thực hiện tìm kiếm sản phẩm...
-  // };
+  const [isSearchBarVisible, setIsSearchBarVisible] = useState(false);
+
+  const toggleSearchBar = () => {
+    setIsSearchBarVisible(!isSearchBarVisible);
+  };
 
   return (
     <div className="swe-header">
@@ -34,7 +32,6 @@ const Navbar = () => {
         <Link to="/accessories">
           <p>accessories</p>
         </Link>
-        {/* <Link to="/Item">item</Link> */}
       </div>
       <div className="nav-logo">
         <Link to="/">
@@ -61,73 +58,19 @@ const Navbar = () => {
           </Link>
         )}
 
-        <p>search</p>
+        <p onClick={toggleSearchBar}>search</p>
+        {isSearchBarVisible && (
+          <SearchBar
+            searchTerm={searchTerm}
+            handleSearch={(e) => setSearchTerm(e.target.value)}
+          />
+        )}
         <p className="nav-sign-button" onClick={openPopup}>
           bag ({getTotalCartItems()})
         </p>
         <Link style={{ textDecoration: "none" }} to="/cart">
           <img src={cart_icon} alt="" />
         </Link>
-        {/* pop up bag  */}
-        <div className="pop-up" id="pop-up-1">
-          <div className="overlay">
-            <div className="product-render">
-              {all_product.map((product) => {
-                if (cartItems[product.id] > 0) {
-                  return (
-                    <div className="content" key={product.id}>
-                      <div className="close-btn" onClick={openPopup}>
-                        close
-                      </div>
-                      <h1>shopping bag</h1>
-                      <hr />
-                      <div className="pop-up-bag">
-                        <div className="pop-up-bag-img">
-                          <img src={product.image} alt="" />
-                        </div>
-                        <div className="pop-up-bag-name">
-                          <p>{product.name}</p>
-                          <p>{cartItems[product.id]}</p>
-                        </div>
-                        <div className="pop-up-bag-price">
-                          <button onClick={() => removeFromCart(product.id)}>
-                            &times;
-                          </button>
-                          <p>{product.new_price}vnd</p>
-                        </div>
-                      </div>
-                      <hr />
-                      <div className="total">
-                        <div className="total-left">
-                          total
-                          <br />
-                          shipping calculated at checkout
-                        </div>
-                        <div className="total-right">
-                          {product.new_price * cartItems[product.id]}vnd
-                        </div>
-                      </div>
-                      <div className="button-detail-bag">
-                        <Link to="/" onClick={openPopup}>
-                          <button className="button-detail-continueshopping">
-                            continue shopping
-                          </button>
-                        </Link>
-
-                        <button className="button-detail-checkout">
-                          checkout
-                        </button>
-                      </div>
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* end pop up bag  */}
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export const Hero = () => {
         <Link to="/NewCollections">new arrivals</Link>
       </div>
       <div className="right-content">
-        <Link to="/NewCollections">best sellers</Link>
+        <Link to="/BestSellers">best sellers</Link>
       </div>
     </div>
   );

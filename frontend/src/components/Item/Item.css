@@ -106,10 +106,11 @@
 .price-product {
   display: flex;
   flex-direction: column; /* Hiển thị các phần tử con theo chiều dọc */
-  justify-content: flex-end; /* Canh giữa theo chiều dọc */
-  align-items: end; /* Canh giữa theo chiều ngang */
+  /* justify-content: flex-end; Canh giữa theo chiều dọc */
+  /* align-items: end; Canh giữa theo chiều ngang */
   text-align: end;
   margin-top: 10px; /* Khoảng cách giữa tên sản phẩm và giá */
+  min-width: 130px;
 }
 
 .price-product p {

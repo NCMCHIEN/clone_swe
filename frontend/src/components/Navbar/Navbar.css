@@ -74,9 +74,14 @@
   font-size: 18px;
   /* font-weight: bold; */
   max-width: 100px;
+  position: relative; /* Đảm bảo các phần tử con có thể sử dụng position: absolute tương đối với nav-sign */
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 .nav-sign p:hover {
   color: orange;
+  cursor: pointer;
 }
 .logout {
   cursor: pointer;

@@ -1,0 +1,17 @@
+.search-bar {
+  position: absolute;
+  top: 50px; /* Điều chỉnh giá trị này tùy thuộc vào vị trí của thẻ p trong Navbar */
+  right: 32px; /* Điều chỉnh giá trị này để căn chỉnh theo chiều ngang */
+  background: white;
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000; /* Đảm bảo SearchBar hiển thị trên cùng */
+}
+
+.search-bar input {
+  width: 200px;
+  padding: 5px;
+  border: none;
+  outline: none;
+}

@@ -32,7 +32,7 @@ export const ProductDisplay = (props) => {
             <button>L</button>
             <button>XL</button>
           </div>
-          <p>Số lượng còn: {product.quantity}</p>
+          <p>quantity remaining: {product.quantity}</p>
         </div>
         <div class="button-detail">
           <button
@@ -48,7 +48,6 @@ export const ProductDisplay = (props) => {
         <hr />
         <div class="infoabout-shirt">
           | SWE® | {product.name} <br />
-          COLOR: BLACK <br />
           MATERIAL: COTTON 100% <br />
           SIZE: S/M/L/XL
           <br />
