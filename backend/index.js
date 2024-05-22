@@ -211,14 +211,6 @@ app.get("/newcollection", async (req, res) => {
   res.send(newcollection);
 });
 
-// Endpoint cho popular women
-// app.get("/popularinwomen", async (req, res) => {
-//   let products = await Product.find({ category: "women" });
-//   let popular_in_women = products.slice(0, 4);
-//   console.log("Popular in women fetched");
-//   res.send(popular_in_women);
-// });
-
 // Middleware để fetch user
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
@@ -430,6 +422,33 @@ app.get("/orders", async (req, res) => {
   } catch (error) {
     console.error("Lỗi khi lấy danh sách đơn hàng:", error);
     res.status(500).json({ success: false, message: "Lỗi máy chủ nội bộ" });
+  }
+});
+// Endpoint để xóa đơn hàng
+app.post("/removeorder", async (req, res) => {
+  const { orderId } = req.body;
+
+  try {
+    const deletedOrder = await Order.findOneAndDelete({ _id: orderId });
+
+    if (!deletedOrder) {
+      return res.status(404).json({
+        success: false,
+        message: "Không tìm thấy đơn hàng",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Đơn hàng đã được xóa thành công",
+      orderId: deletedOrder._id,
+    });
+  } catch (error) {
+    console.error("Lỗi khi xóa đơn hàng:", error);
+    res.status(500).json({
+      success: false,
+      message: "Lỗi máy chủ nội bộ",
+    });
   }
 });
 

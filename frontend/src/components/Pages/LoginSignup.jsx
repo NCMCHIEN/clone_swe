@@ -2,14 +2,24 @@ import React, { useState } from "react";
 import "./CSS/LoginSignup.css";
 
 const LoginSignup = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
+  // Trạng thái riêng biệt cho phần đăng nhập và đăng ký
+  const [loginData, setLoginData] = useState({
     email: "",
+    password: "",
   });
 
-  const changeHandler = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  const [registerData, setRegisterData] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
+
+  const handleLoginChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
+
+  const handleRegisterChange = (e) => {
+    setRegisterData({ ...registerData, [e.target.name]: e.target.value });
   };
 
   const login = async () => {

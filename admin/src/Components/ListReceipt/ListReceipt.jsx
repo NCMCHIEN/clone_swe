@@ -4,25 +4,25 @@ import "./ListReceipt.css"; // Tạo file CSS cho giao diện admin nếu cần 
 const ListReceipt = () => {
   const [orders, setOrders] = useState([]);
 
-  useEffect(() => {
-    fetchOrders(); // Gọi hàm fetchOrders để lấy danh sách đơn hàng khi component được render
-  }, []);
-
   const fetchOrders = async () => {
     try {
       const response = await fetch("http://localhost:4010/orders");
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Mạng phản hồi không tốt");
       }
       const data = await response.json();
       setOrders(data);
     } catch (error) {
-      console.error("Error fetching orders:", error);
+      console.error("Lỗi khi lấy đơn hàng:", error);
       // Xử lý thông báo lỗi nếu cần thiết
     }
   };
 
-  const removeOrder = async (id) => {
+  useEffect(() => {
+    fetchOrders(); // Gọi hàm fetchOrders để lấy danh sách đơn hàng khi component được render
+  }, []);
+
+  const removeOrder = async (orderId) => {
     try {
       const response = await fetch("http://localhost:4010/removeorder", {
         method: "POST",
@@ -30,7 +30,7 @@ const ListReceipt = () => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id }),
+        body: JSON.stringify({ orderId }), // Đảm bảo gửi đúng trường orderId
       });
       if (!response.ok) {
         throw new Error("Lỗi khi xóa đơn hàng");
@@ -42,54 +42,47 @@ const ListReceipt = () => {
     }
   };
 
+  const calculateTotalPrice = (items) => {
+    return items.reduce((total, item) => total + item.price * item.quantity, 0);
+  };
+
   return (
-    <div className="admin-orders">
-      <h1>Orders</h1>
-      <table>
-        <thead>
-          <tr>
-            <th>Order ID</th>
-            <th>Customer ID</th>
-            <th>Items</th>
-            <th>Total Price</th>
-            {/* <th>Date</th> */}
-            <th>Phone Number</th>
-            <th>Address</th>
-            <th>Actions</th> {/* Thêm cột Actions */}
-          </tr>
-        </thead>
-        <tbody>
-          {orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order._id}</td>
-              <td>{order.userId}</td>
-              <td>
-                <ul>
-                  {order.items.map((item, index) => (
-                    <li key={index}>
-                      Product ID: {item.productId}, Quantity: {item.quantity}
-                    </li>
-                  ))}
-                </ul>
-              </td>
-              <td>${calculateTotalPrice(order.items)}</td>
-              {/* <td>{moment(order.date).format("YYYY-MM-DD HH:mm:ss")}</td> */}
-              <td>{order.phoneNumber}</td>
-              <td>{order.address}</td>
-              <td>
-                <button onClick={() => removeOrder(order._id)}>Remove</button>
-              </td>{" "}
-              {/* Thêm nút Remove */}
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="list-receipt">
+      <h1>Đơn hàng</h1>
+      <div className="listreceipt-format-main">
+        <p>ID Đơn hàng</p>
+        <p>ID Khách hàng</p>
+        <p>Sản phẩm</p>
+        <p>Tổng giá</p>
+        <p>Số điện thoại</p>
+        <p>Địa chỉ</p>
+        <p>Thao tác</p>
+      </div>
+      <div className="listreceipt-allreceipts">
+        <hr />
+        {orders.map((order) => (
+          <React.Fragment key={order._id}>
+            <div className="listreceipt-format-main listreceipt-format">
+              <p>{order._id}</p>
+              <p>{order.userId}</p>
+              <p>
+                {order.items.map((item, index) => (
+                  <li key={index}>
+                    ID Sản phẩm: {item.productId}, Số lượng: {item.quantity}
+                  </li>
+                ))}
+              </p>
+              <p>${calculateTotalPrice(order.items)}</p>
+              <p>{order.phoneNumber}</p>
+              <p>{order.address}</p>
+              <button onClick={() => removeOrder(order._id)}>Xóa</button>
+            </div>
+            <hr />
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
-};
-
-const calculateTotalPrice = (items) => {
-  return items.reduce((total, item) => total + item.price * item.quantity, 0);
 };
 
 export default ListReceipt;

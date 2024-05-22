@@ -1,0 +1,69 @@
+.list-receipt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 740px;
+  padding: 10px 50px;
+  margin: 30px;
+  border-radius: 6px;
+  background: white;
+}
+
+.listreceipt-format-main {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr 1fr 1fr 1fr 1fr; /* Thêm một cột mới */
+  gap: 10px;
+  width: 100%;
+  padding: 20px 0px;
+  color: #454545;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.listreceipt-format {
+  align-items: center;
+  font-weight: 500;
+}
+
+.listreceipt-receipt-icon {
+  height: 80px;
+}
+
+.listreceipt-remove-icon {
+  cursor: pointer;
+  margin: auto;
+}
+
+.listreceipt-allreceipts {
+  overflow-y: auto;
+  width: 100%;
+}
+.listreceipt-format-main p:nth-child(1),
+.listreceipt-format-main p:nth-child(2) {
+  width: 100px; /* Điều chỉnh chiều rộng tùy thích */
+  overflow: hidden; /* Tránh tràn bên ngoài */
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm (...) nếu nội dung quá dài */
+  white-space: nowrap; /* Ngăn chặn các dòng mới */
+  cursor: pointer; /* Biến con trỏ thành dấu nhấp chuột khi di chuột qua */
+}
+
+@media (max-width: 800px) {
+  .list-receipt {
+    box-sizing: border-box;
+    width: 95%;
+    height: 100%;
+    padding: 10px 30px;
+    margin: 20px auto;
+  }
+
+  .listreceipt-format-main {
+    padding: 15px 0px;
+    color: #454545;
+    font-size: 12px;
+  }
+
+  .listreceipt-receipt-icon {
+    height: 60px;
+  }
+}

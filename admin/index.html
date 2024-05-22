@@ -14,4 +14,18 @@
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const idElements = document.querySelectorAll(
+        ".listreceipt-format-main p:nth-child(1), .listreceipt-format-main p:nth-child(2)"
+      );
+
+      idElements.forEach((element) => {
+        element.addEventListener("click", function () {
+          const fullText = this.textContent;
+          alert(fullText);
+        });
+      });
+    });
+  </script>
 </html>

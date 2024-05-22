@@ -47,7 +47,11 @@ const ListProduct = () => {
         {allproducts.map((product, index) => (
           <React.Fragment key={index}>
             <div className="listproduct-format-main listproduct-format">
-              <img className="listproduct-product-icon" src={product.image} alt={product.name} />
+              <img
+                className="listproduct-product-icon"
+                src={product.image}
+                alt={product.name}
+              />
               <p>{product.name}</p>
               <p>${product.old_price}</p>
               <p>${product.new_price}</p>
