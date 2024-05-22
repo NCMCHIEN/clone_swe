@@ -1,4 +1,4 @@
-const port = 4005;
+const port = 4010;
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -12,9 +12,8 @@ app.use(cors());
 
 // Kết nối db mongodb
 mongoose.connect(
-  "mongodb+srv://nguyencaominhchien:chien123456789@cluster0.ssllwqi.mongodb.net/quanaodb"
+  "mongodb+srv://cloneswe:chien123456789@cluster0.jgbzzce.mongodb.net/"
 );
-
 // API test
 app.get("/", (req, res) => {
   res.send("Express app đang chạy");
@@ -148,6 +147,7 @@ const Users = mongoose.model("Users", {
   },
   cartData: {
     type: Object,
+    default: {}, // Ensure cartData is always initialized as an empty object
   },
   date: {
     type: Date,
@@ -159,8 +159,9 @@ const Users = mongoose.model("Users", {
 app.post("/signup", async (req, res) => {
   let check = await Users.findOne({ email: req.body.email });
   if (check) {
-    return res.status(400).json({ success: false, errors: "Trùng email" });
+    return res.status(400).json({ success: false, errors: "trung email" });
   }
+  // tạo một đối tượng cart để đại diện cho giỏ hàng của người dùng. Ở đây, một vòng lặp được sử dụng để khởi tạo giỏ hàng với 300 sản phẩm, mỗi sản phẩm có số lượng là 0.
   let cart = {};
   for (let i = 0; i < 300; i++) {
     cart[i] = 0;
@@ -222,14 +223,14 @@ app.get("/newcollection", async (req, res) => {
 const fetchUser = async (req, res, next) => {
   const token = req.header("auth-token");
   if (!token) {
-    res.status(401).send({ errors: "Vui lòng cung cấp token hợp lệ" });
+    return res.status(401).send({ errors: "Vui lòng cung cấp token hợp lệ" });
   } else {
     try {
       const data = jwt.verify(token, "secret_ecom");
       req.user = data.user;
       next();
     } catch (error) {
-      res.status(401).send({ errors: "Token không hợp lệ" });
+      return res.status(401).send({ errors: "Token không hợp lệ" });
     }
   }
 };
@@ -238,7 +239,13 @@ const fetchUser = async (req, res, next) => {
 app.post("/addtocart", fetchUser, async (req, res) => {
   console.log("Added", req.body.itemId);
   let userData = await Users.findOne({ _id: req.user.id });
-  userData.cartData[req.body.itemId] += 1;
+  if (!userData) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Không tìm thấy người dùng" });
+  }
+  userData.cartData[req.body.itemId] =
+    (userData.cartData[req.body.itemId] || 0) + 1;
   await Users.findOneAndUpdate(
     { _id: req.user.id },
     { cartData: userData.cartData }
@@ -250,8 +257,14 @@ app.post("/addtocart", fetchUser, async (req, res) => {
 app.post("/removefromcart", fetchUser, async (req, res) => {
   console.log("Removed", req.body.itemId);
   let userData = await Users.findOne({ _id: req.user.id });
-  if (userData.cartData[req.body.itemId] > 0)
+  if (!userData) {
+    return res
+      .status(404)
+      .json({ success: false, message: "Không tìm thấy người dùng" });
+  }
+  if (userData.cartData[req.body.itemId] > 0) {
     userData.cartData[req.body.itemId] -= 1;
+  }
   await Users.findOneAndUpdate(
     { _id: req.user.id },
     { cartData: userData.cartData }
@@ -261,11 +274,10 @@ app.post("/removefromcart", fetchUser, async (req, res) => {
 
 // Endpoint lấy cart item
 app.post("/getcart", fetchUser, async (req, res) => {
-  console.log("Get cart");
+  console.log("get cart");
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
-
 // Schema cho Order
 const Order = mongoose.model("Order", {
   userId: {

@@ -1,52 +1,65 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import "./ProductDisplay.css";
-import star_icon from "../Assets/star_icon.png";
-import star_dull_icon from "../Assets/star_dull_icon.png";
+
 import { ShopContext } from "../Context/ShopContext";
 
 export const ProductDisplay = (props) => {
   const { product } = props;
   const { addToCart } = useContext(ShopContext);
+  const [selectedSize, setSelectedSize] = useState(null);
+
+  const handleSizeSelect = (size) => {
+    setSelectedSize(size);
+  };
+
   return (
-    <div class="display-body">
+    <div className="display-body">
       {/* <!-- left  --> */}
-      <div class="display-left-content">
+      <div className="display-left-content">
         <p>
-          <img src={product.image} />
+          <img src={product.image} alt="product" />
         </p>
       </div>
       {/* <!-- end left  --> */}
       {/* <!-- right --> */}
-      <div class="display-right-content">
+      <div className="display-right-content">
         <h2>{product.name}</h2>
         <hr />
-        <div class="price-product-saleoffer">
-          <p class="price-product-sale">{product.new_price} VND</p>
-          <p class="price-product-offer">{product.old_price} VND</p>
+        <div className="price-product-saleoffer">
+          <p className="price-product-sale">{product.new_price} VND</p>
+          <p className="price-product-offer">{product.old_price} VND</p>
         </div>
-        <div class="select-size">
+        <div className="select-size">
           <p>please select size</p>
-          <div class="select-size-button">
-            <button>S</button>
-            <button>M</button>
-            <button>L</button>
-            <button>XL</button>
+          <div className="select-size-button">
+            {["S", "M", "L", "XL"].map((size) => (
+              <button key={size} onClick={() => handleSizeSelect(size)}>
+                {size}
+              </button>
+            ))}
           </div>
           <p>quantity remaining: {product.quantity}</p>
         </div>
-        <div class="button-detail">
-          <button
-            class="button-detail-addtocart"
-            onClick={() => {
-              addToCart(product.id);
-            }}
-          >
-            add to bag
-          </button>
-          <button class="button-detail-help">help me!</button>
-        </div>
+        {/* Ẩn nút "add to bag" khi số lượng sản phẩm đã hết */}
+        {product.quantity > 0 && (
+          <div className="button-detail">
+            <button
+              className="button-detail-addtocart"
+              onClick={() => {
+                if (selectedSize) {
+                  addToCart(product.id, selectedSize);
+                } else {
+                  alert("Please select a size");
+                }
+              }}
+            >
+              add to bag
+            </button>
+            <button className="button-detail-help">help me!</button>
+          </div>
+        )}
         <hr />
-        <div class="infoabout-shirt">
+        <div className="infoabout-shirt">
           | SWE® | {product.name} <br />
           MATERIAL: COTTON 100% <br />
           SIZE: S/M/L/XL

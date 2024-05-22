@@ -8,7 +8,7 @@ export const NewCollections = () => {
   const { searchTerm } = useContext(ShopContext);
 
   useEffect(() => {
-    fetch("http://localhost:4005/newcollection")
+    fetch("http://localhost:4010/newcollection")
       .then((response) => response.json())
       .then((data) => setNewCollection(data));
   }, []);
@@ -19,8 +19,8 @@ export const NewCollections = () => {
 
   return (
     <div className="new-collections">
-      <h1>NEW COLLECTIONS</h1>
-      <hr />
+      {/* <h1>NEW COLLECTIONS</h1>
+      <hr /> */}
       <div className="collections">
         {filteredCollection.map((item, i) => (
           <Item

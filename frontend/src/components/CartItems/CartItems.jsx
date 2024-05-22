@@ -16,17 +16,22 @@ export const CartItems = () => {
   const [address, setAddress] = useState("");
 
   const handleCheckout = async () => {
-    const cartProducts = all_product.filter(
-      (product) => cartItems[product.id] > 0
+    const cartProducts = all_product.filter((product) =>
+      Object.keys(cartItems[product.id] || {}).some(
+        (size) => cartItems[product.id][size] > 0
+      )
     );
-    const items = cartProducts.map((product) => ({
-      productId: product.id,
-      quantity: cartItems[product.id],
-      price: product.new_price,
-    }));
+    const items = cartProducts.flatMap((product) =>
+      Object.keys(cartItems[product.id]).map((size) => ({
+        productId: product.id,
+        size,
+        quantity: cartItems[product.id][size],
+        price: product.new_price,
+      }))
+    );
 
     try {
-      const response = await fetch("http://localhost:4005/purchase", {
+      const response = await fetch("http://localhost:4010/purchase", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,14 +47,16 @@ export const CartItems = () => {
 
       // Cập nhật số lượng sản phẩm đã bán (sold)
       cartProducts.forEach(async (product) => {
-        const updatedSold = product.sold + cartItems[product.id];
-        await fetch(`http://localhost:4005/updateproductsold/${product.id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "auth-token": localStorage.getItem("auth-token"),
-          },
-          body: JSON.stringify({ sold: updatedSold }),
+        Object.keys(cartItems[product.id]).forEach(async (size) => {
+          const updatedSold = product.sold + cartItems[product.id][size];
+          await fetch(`http://localhost:4005/updateproductsold/${product.id}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "auth-token": localStorage.getItem("auth-token"),
+            },
+            body: JSON.stringify({ sold: updatedSold }),
+          });
         });
       });
 
@@ -68,35 +75,45 @@ export const CartItems = () => {
       <div className="cartitems-format-main">
         <p>Products</p>
         <p>Title</p>
+        <p>Size</p>
         <p>Price</p>
         <p>Quantity</p>
         <p>Total</p>
         <p>Remove</p>
       </div>
       <hr />
-      {all_product.map((e) => {
-        if (cartItems[e.id] > 0) {
-          return (
-            <div key={e.id}>
-              <div className="cartitems-format cartitems-format-main">
-                <img src={e.image} alt="" className="carticon-product-icon" />
-                <p>{e.name}</p>
-                <p>${e.new_price}</p>
-                <button className="cartitems-quantity">
-                  {cartItems[e.id]}
-                </button>
-                <p>${e.new_price * cartItems[e.id]}</p>
-                <img
-                  className="cartitems-remove-icon"
-                  src={remove_icon}
-                  onClick={() => {
-                    removeFromCart(e.id);
-                  }}
-                  alt=""
-                />
-              </div>
-              <hr />
-            </div>
+      {all_product.map((product) => {
+        const sizes = cartItems[product.id];
+        if (sizes) {
+          return Object.keys(sizes).map(
+            (size) =>
+              sizes[size] > 0 && (
+                <div key={`${product.id}-${size}`}>
+                  <div className="cartitems-format cartitems-format-main">
+                    <img
+                      src={product.image}
+                      alt=""
+                      className="carticon-product-icon"
+                    />
+                    <p>{product.name}</p>
+                    <p>{size}</p>
+                    <p>${product.new_price}</p>
+                    <button className="cartitems-quantity">
+                      {sizes[size]}
+                    </button>
+                    <p>${product.new_price * sizes[size]}</p>
+                    <img
+                      className="cartitems-remove-icon"
+                      src={remove_icon}
+                      onClick={() => {
+                        removeFromCart(product.id, size);
+                      }}
+                      alt=""
+                    />
+                  </div>
+                  <hr />
+                </div>
+              )
           );
         }
         return null;

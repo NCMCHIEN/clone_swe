@@ -4,10 +4,11 @@ import upload_area from "../../assets/upload_area.svg";
 
 const AddProduct = () => {
   const [image, setImage] = useState(false);
+  const [imageSecond, setImageSecond] = useState(false);
   const [productDetails, setProductDetails] = useState({
     name: "",
     image: "",
-    category: "women",
+    category: "",
     new_price: "",
     old_price: "",
     quantity: "", // Add quantity to productDetails state
@@ -32,7 +33,7 @@ const AddProduct = () => {
     let formData = new FormData();
     formData.append("product", image);
     // gửi tới api
-    await fetch("http://localhost:4005/upload", {
+    await fetch("http://localhost:4010/upload", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -46,7 +47,7 @@ const AddProduct = () => {
     if (responseData.success) {
       product.image = responseData.image_url;
       console.log(product);
-      await fetch("http://localhost:4005/addproduct", {
+      await fetch("http://localhost:4010/addproduct", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -116,7 +117,9 @@ const AddProduct = () => {
         >
           <option value="women">Women</option>
           <option value="men">Men</option>
-          <option value="kid">Kid</option>
+          <option value="top">Top</option>
+          <option value="bottom">Bottom</option>
+          <option value="accessorie">Accessories</option>
         </select>
       </div>
       <div className="addproduct-itemfield">
@@ -127,6 +130,7 @@ const AddProduct = () => {
             alt=""
           />
         </label>
+
         <input
           onChange={imageHandler}
           type="file"

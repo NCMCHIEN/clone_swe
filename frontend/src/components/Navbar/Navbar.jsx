@@ -65,11 +65,11 @@ const Navbar = () => {
             handleSearch={(e) => setSearchTerm(e.target.value)}
           />
         )}
-        <p className="nav-sign-button" onClick={openPopup}>
-          bag ({getTotalCartItems()})
-        </p>
+
         <Link style={{ textDecoration: "none" }} to="/cart">
-          <img src={cart_icon} alt="" />
+          <p className="nav-sign-button" onClick={openPopup}>
+            bag ({getTotalCartItems()})
+          </p>
         </Link>
       </div>
     </div>

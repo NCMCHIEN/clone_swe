@@ -1,44 +1,57 @@
 .cartitems {
   margin: 100px 170px;
 }
+
 .cartitems hr {
   height: 3px;
   background: black;
   border: 0;
 }
+
 .cartitems-format-main {
   display: grid;
-  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.5fr; /* Thêm cột cho nút Remove */
   align-items: center;
-  gap: 75px;
-  padding: 20px 0px;
+  gap: 20px; /* Giảm khoảng cách giữa các phần tử */
+  padding: 20px 0;
   color: #454545;
   font-size: 18px;
   font-weight: 600;
 }
+
 .cartitems-format {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr 1fr 0.5fr; /* Đồng bộ với cartitems-format-main */
+  align-items: center;
+  gap: 20px; /* Giảm khoảng cách giữa các phần tử */
   font-size: 17px;
   font-weight: 500;
 }
+
 .carticon-product-icon {
   height: 62px;
 }
+
 .cartitems-remove-icon {
-  width: 15px;
-  margin: 0px 40px;
+  width: 20px; /* Tăng kích thước cho dễ bấm */
   cursor: pointer;
 }
+
 .cartitems-quantity {
-  width: 64px;
+  width: 50px; /* Giảm chiều rộng để vừa với layout */
   height: 50px;
   border: 2px solid #ebebeb;
   background: #fff;
+  text-align: center; /* Center align text */
+  line-height: 50px; /* Center align text vertically */
 }
+
 .cartitems-down {
   display: flex;
-  margin: 100px 0px;
+  margin: 100px 0;
   width: 100%;
 }
+
 .cartitems-total {
   flex: 1;
   display: flex;
@@ -46,11 +59,13 @@
   margin-right: 200px;
   gap: 40px;
 }
+
 .cartitems-total-item {
   display: flex;
   justify-content: space-between;
-  padding: 15px 0px;
+  padding: 15px 0;
 }
+
 .cartitems-total button {
   width: 262px;
   height: 58px;
@@ -62,36 +77,41 @@
   font-weight: 600;
   cursor: pointer;
 }
+
 .cartitems-promocode {
   flex: 1;
   font-size: 16px;
   font-weight: 500;
 }
+
 .cartitems-promocode p {
   color: #555;
 }
+
 .cartitems-promobox {
   width: 504px;
   margin-top: 15px;
   padding-left: 20px;
   height: 58px;
   background: #eaeaea;
+  display: flex; /* Sử dụng flexbox để canh giữa input và button */
+  align-items: center;
 }
+
 .cartitems-promobox input {
   border: none;
   outline: none;
   background: transparent;
   font-size: 16px;
-  width: 200px;
-  height: 50px;
+  width: 100%; /* Để input chiếm toàn bộ không gian trống */
+  margin-right: 10px; /* Khoảng cách giữa input và button */
 }
+
 .cartitems-promobox button {
   width: 170px;
   height: 58px;
   font-size: 16px;
   background: black;
   color: white;
-  color: white;
   cursor: pointer;
-  float: inline-end;
 }

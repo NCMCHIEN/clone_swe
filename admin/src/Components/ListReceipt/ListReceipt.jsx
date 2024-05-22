@@ -10,7 +10,7 @@ const ListReceipt = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:4005/orders");
+      const response = await fetch("http://localhost:4010/orders");
       if (!response.ok) {
         throw new Error("Network response was not ok");
       }
@@ -24,7 +24,7 @@ const ListReceipt = () => {
 
   const removeOrder = async (id) => {
     try {
-      const response = await fetch("http://localhost:4005/removeorder", {
+      const response = await fetch("http://localhost:4010/removeorder", {
         method: "POST",
         headers: {
           Accept: "application/json",
