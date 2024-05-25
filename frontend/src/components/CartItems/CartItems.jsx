@@ -30,6 +30,14 @@ export const CartItems = () => {
       }))
     );
 
+    const formatCurrency = (value) => {
+      if (!value) return value;
+      const stringValue = value.toString();
+      const parts = stringValue.split(".");
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      return parts.join(",");
+    };
+
     try {
       const response = await fetch("http://localhost:4010/purchase", {
         method: "POST",
@@ -61,25 +69,33 @@ export const CartItems = () => {
       });
 
       const result = await response.json();
-      alert("Purchase successful!");
+      alert("Mua hàng thành công!");
 
       clearCart(); // Gọi hàm clearCart để xóa toàn bộ giỏ hàng
     } catch (error) {
-      console.error("Error during purchase:", error);
-      alert(`Failed to complete purchase: ${error.message}`);
+      console.error("Lỗi khi mua hàng:", error);
+      alert(`Không thể hoàn tất mua hàng: ${error.message}`);
     }
+  };
+
+  const formatCurrency = (value) => {
+    if (!value) return value;
+    const stringValue = value.toString();
+    const parts = stringValue.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return parts.join(",");
   };
 
   return (
     <div className="cartitems">
       <div className="cartitems-format-main">
-        <p>Products</p>
-        <p>Title</p>
-        <p>Size</p>
-        <p>Price</p>
-        <p>Quantity</p>
-        <p>Total</p>
-        <p>Remove</p>
+        <p>Sản phẩm</p>
+        <p>Tiêu đề</p>
+        <p>Kích thước</p>
+        <p>Giá</p>
+        <p>Số lượng</p>
+        <p>Tổng</p>
+        <p>Xóa</p>
       </div>
       <hr />
       {all_product.map((product) => {
@@ -97,11 +113,11 @@ export const CartItems = () => {
                     />
                     <p>{product.name}</p>
                     <p>{size}</p>
-                    <p>${product.new_price}</p>
+                    <p>{formatCurrency(product.new_price)}</p>
                     <button className="cartitems-quantity">
                       {sizes[size]}
                     </button>
-                    <p>${product.new_price * sizes[size]}</p>
+                    <p>{formatCurrency(product.new_price * sizes[size])}</p>
                     <img
                       className="cartitems-remove-icon"
                       src={remove_icon}
@@ -120,47 +136,47 @@ export const CartItems = () => {
       })}
       <div className="cartitems-down">
         <div className="cartitems-total">
-          <h1>Cart Totals</h1>
+          <h1>Tổng giỏ hàng</h1>
           <div>
             <div className="cartitems-total-item">
-              <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+              <p>Tổng phụ</p>
+              <p>{formatCurrency(getTotalCartAmount())}</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
-              <p>Shipping fee</p>
-              <p>Free</p>
+              <p>Phí vận chuyển</p>
+              <p>Miễn phí</p>
             </div>
             <hr />
             <div className="cartitems-total-item">
-              <h3>Total</h3>
-              <h3>${getTotalCartAmount()}</h3>
+              <h3>Tổng cộng</h3>
+              <h3>{formatCurrency(getTotalCartAmount())}₫</h3>
             </div>
           </div>
           <div className="contact-info">
-            <h2>Contact Information</h2>
+            <h2>Thông tin liên hệ</h2>
             <input
               type="text"
-              placeholder="Phone Number"
+              placeholder="Số điện thoại"
               value={phoneNumber}
               onChange={(e) => setPhoneNumber(e.target.value)}
               required
             />
             <input
               type="text"
-              placeholder="Address"
+              placeholder="Địa chỉ"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
               required
             />
           </div>
-          <button onClick={handleCheckout}>PROCEED TO CHECKOUT</button>
+          <button onClick={handleCheckout}>TIẾN HÀNH THANH TOÁN</button>
         </div>
         <div className="cartitems-promocode">
-          <p>If you have a promo code, enter it here</p>
+          <p>Nếu bạn có mã khuyến mãi, hãy nhập vào đây</p>
           <div className="cartitems-promobox">
-            <input type="text" placeholder="promo code" />
-            <button>Submit</button>
+            <input type="text" placeholder="mã khuyến mãi" />
+            <button>Nộp</button>
           </div>
         </div>
       </div>

@@ -26,6 +26,9 @@
   font-weight: 500;
 }
 
+.listproduct-format > input {
+  width: 10px;
+}
 .listproduct-product-icon {
   height: 80px;
 }

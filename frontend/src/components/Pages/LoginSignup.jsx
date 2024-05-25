@@ -23,7 +23,7 @@ const LoginSignup = () => {
   };
 
   const login = async () => {
-    console.log("login funciotn chay duowc", formData);
+    console.log("login function running", loginData);
     let responseData;
     await fetch("http://localhost:4010/login", {
       method: "POST",
@@ -31,7 +31,7 @@ const LoginSignup = () => {
         Accept: "application/form-data",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(loginData),
     })
       .then((response) => response.json())
       .then((data) => (responseData = data));
@@ -44,7 +44,7 @@ const LoginSignup = () => {
   };
 
   const signup = async () => {
-    console.log("signup funciotn chay duowc", formData);
+    console.log("signup function running", registerData);
     let responseData;
     await fetch("http://localhost:4010/signup", {
       method: "POST",
@@ -52,7 +52,7 @@ const LoginSignup = () => {
         Accept: "application/form-data",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify(registerData),
     })
       .then((response) => response.json())
       .then((data) => (responseData = data));
@@ -65,61 +65,61 @@ const LoginSignup = () => {
   };
 
   return (
-    <div class="login-body">
+    <div className="login-body">
       {/* Sign in */}
-      <div class="sign-in">
+      <div className="sign-in">
         <p>sign in</p>
-        <div class="customer-sign-in">
+        <div className="customer-sign-in">
           <input
             type="email"
             placeholder="email"
             name="email"
-            value={formData.email}
-            onChange={changeHandler}
+            value={loginData.email}
+            onChange={handleLoginChange}
           />
           <input
             type="password"
             placeholder="mật khẩu"
             name="password"
-            value={formData.password}
-            onChange={changeHandler}
+            value={loginData.password}
+            onChange={handleLoginChange}
           />
         </div>
-        <div class="btn-sign-in">
-          <button class="continue-signin" onClick={login}>
+        <div className="btn-sign-in">
+          <button className="continue-signin" onClick={login}>
             sign in
           </button>
-          <button class="forget-pass">quên mật khẩu</button>
+          <button className="forget-pass">quên mật khẩu</button>
         </div>
       </div>
       {/* Register */}
-      <div class="register">
+      <div className="register">
         <p>register</p>
-        <div class="customer-register">
+        <div className="customer-register">
           <input
             type="text"
             placeholder="họ và tên"
             name="username"
-            value={formData.username}
-            onChange={changeHandler}
+            value={registerData.username}
+            onChange={handleRegisterChange}
           />
           <input
             type="email"
             placeholder="email"
             name="email"
-            value={formData.email}
-            onChange={changeHandler}
+            value={registerData.email}
+            onChange={handleRegisterChange}
           />
           <input
             type="password"
             placeholder="mật khẩu"
             name="password"
-            value={formData.password}
-            onChange={changeHandler}
+            value={registerData.password}
+            onChange={handleRegisterChange}
           />
         </div>
-        <div class="btn-register">
-          <button class="continue-createacc" onClick={signup}>
+        <div className="btn-register">
+          <button className="continue-createacc" onClick={signup}>
             create account
           </button>
         </div>
@@ -127,4 +127,5 @@ const LoginSignup = () => {
     </div>
   );
 };
+
 export default LoginSignup;

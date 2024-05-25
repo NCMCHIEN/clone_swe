@@ -17,8 +17,7 @@ const ListProduct = () => {
     fetchInfo();
   }, []);
 
-  // xoa sanpham
-  const remove_product = async (id) => {
+  const removeProduct = async (id) => {
     await fetch("http://localhost:4010/removeproduct", {
       method: "POST",
       headers: {
@@ -30,17 +29,44 @@ const ListProduct = () => {
     await fetchInfo();
   };
 
+  const updatePrice = async (id, field, value) => {
+    const updatedValue = value.replace(/\./g, ""); // Loại bỏ dấu chấm trước khi gửi lên server
+    await fetch("http://localhost:4010/updateproductprice", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id, field, value: updatedValue }),
+    });
+    fetchInfo();
+  };
+
+  const handlePriceChange = (index, field, value) => {
+    const updatedProducts = [...allproducts];
+    updatedProducts[index][field] = value;
+    setAllProducts(updatedProducts);
+  };
+
+  const formatCurrency = (value) => {
+    if (!value) return value;
+    const stringValue = value.toString();
+    const parts = stringValue.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return parts.join(",");
+  };
+
   return (
     <div className="list-product">
-      <h1>All products list</h1>
+      <h1>Danh sách tất cả sản phẩm</h1>
       <div className="listproduct-format-main">
-        <p>Product</p>
-        <p>Title</p>
-        <p>Old Price</p>
-        <p>New Price</p>
-        <p>Category</p>
-        <p>Quantity</p>
-        <p>Remove</p>
+        <p>Sản phẩm</p>
+        <p>Tên</p>
+        <p>Giá cũ</p>
+        <p>Giá mới</p>
+        <p>Danh mục</p>
+        <p>Số lượng</p>
+        <p>Xóa</p>
       </div>
       <div className="listproduct-allproducts">
         <hr />
@@ -53,17 +79,37 @@ const ListProduct = () => {
                 alt={product.name}
               />
               <p>{product.name}</p>
-              <p>${product.old_price}</p>
-              <p>${product.new_price}</p>
+              <input
+                type="text"
+                value={formatCurrency(product.old_price)}
+                onChange={(e) =>
+                  handlePriceChange(index, "old_price", e.target.value)
+                }
+                onBlur={(e) =>
+                  updatePrice(product.id, "old_price", e.target.value)
+                }
+              />{" "}
+              {/* VND */}
+              <input
+                type="text"
+                value={formatCurrency(product.new_price)}
+                onChange={(e) =>
+                  handlePriceChange(index, "new_price", e.target.value)
+                }
+                onBlur={(e) =>
+                  updatePrice(product.id, "new_price", e.target.value)
+                }
+              />{" "}
+              {/* VND */}
               <p>{product.category}</p>
               <p className="listproduct-quantity">{product.quantity}</p>
               <img
                 onClick={() => {
-                  remove_product(product.id);
+                  removeProduct(product.id);
                 }}
                 className="listproduct-remove-icon"
                 src={cross_icon}
-                alt="Remove"
+                alt="Xóa"
               />
             </div>
             <hr />

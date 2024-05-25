@@ -1,13 +1,13 @@
 .display-body {
   display: flex;
   /* margin: 120px 0 0 200px; */
-  margin-left: 25%;
+  margin-left: 10%;
   /* margin-top: 170px; */
   width: auto;
 }
 .display-left-content > p > img {
-  width: 388px;
-  height: 388px;
+  width: 600px;
+  height: 600px;
 }
 .display-right-content {
   /* max-width: 555px; */
@@ -94,4 +94,5 @@
   letter-spacing: 1px;
   font-size: 16px;
   font-stretch: condensed;
+  margin-bottom: 40px;
 }

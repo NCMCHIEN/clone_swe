@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import "./ProductDisplay.css";
-
 import { ShopContext } from "../Context/ShopContext";
 
 export const ProductDisplay = (props) => {
@@ -12,35 +11,47 @@ export const ProductDisplay = (props) => {
     setSelectedSize(size);
   };
 
+  const formatCurrency = (value) => {
+    if (!value) return value;
+    const stringValue = value.toString();
+    const parts = stringValue.split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return parts.join(",");
+  };
+
   return (
     <div className="display-body">
-      {/* <!-- left  --> */}
       <div className="display-left-content">
         <p>
           <img src={product.image} alt="product" />
         </p>
       </div>
-      {/* <!-- end left  --> */}
-      {/* <!-- right --> */}
       <div className="display-right-content">
         <h2>{product.name}</h2>
         <hr />
         <div className="price-product-saleoffer">
-          <p className="price-product-sale">{product.new_price} VND</p>
-          <p className="price-product-offer">{product.old_price} VND</p>
+          <p className="price-product-sale">
+            {formatCurrency(product.new_price)} VND
+          </p>
+          <p className="price-product-offer">
+            {formatCurrency(product.old_price)} VND
+          </p>
         </div>
         <div className="select-size">
-          <p>please select size</p>
+          <p>Vui lòng chọn kích thước</p>
           <div className="select-size-button">
             {["S", "M", "L", "XL"].map((size) => (
-              <button key={size} onClick={() => handleSizeSelect(size)}>
+              <button
+                key={size}
+                onClick={() => handleSizeSelect(size)}
+                className={selectedSize === size ? "selected" : ""}
+              >
                 {size}
               </button>
             ))}
           </div>
-          <p>quantity remaining: {product.quantity}</p>
+          <p>Số lượng còn lại: {product.quantity}</p>
         </div>
-        {/* Ẩn nút "add to bag" khi số lượng sản phẩm đã hết */}
         {product.quantity > 0 && (
           <div className="button-detail">
             <button
@@ -49,11 +60,11 @@ export const ProductDisplay = (props) => {
                 if (selectedSize) {
                   addToCart(product.id, selectedSize);
                 } else {
-                  alert("Please select a size");
+                  alert("Vui lòng chọn kích thước");
                 }
               }}
             >
-              add to bag
+              Thêm vào giỏ hàng
             </button>
             <button className="button-detail-help">help me!</button>
           </div>
@@ -61,12 +72,12 @@ export const ProductDisplay = (props) => {
         <hr />
         <div className="infoabout-shirt">
           | SWE® | {product.name} <br />
-          MATERIAL: COTTON 100% <br />
-          SIZE: S/M/L/XL
+          CHẤT LIỆU: COTTON 100% <br />
+          KÍCH THƯỚC: S/M/L/XL
           <br />
           <br />
           {product.name} - Chiếc áo với thiết kế dễ thương nằm trong SWE Summer
-          Collection 2024. Áo có hoạ tiết trái tim được in tràn viền rất bắt mắt
+          Collection 2024. Áo có họa tiết trái tim được in tràn viền rất bắt mắt
           và nổi bật cùng điểm nhấn chữ Kid Atelier được in phía trên ngực trái.
           Đây chắc chắn sẽ là một sản phẩm rất phù hợp dành cho các cặp đôi.
           <br />
@@ -86,9 +97,12 @@ export const ProductDisplay = (props) => {
           Size L: Chiều cao từ 1m75 - 1m85, cân nặng dưới 90kg
           <br />
           Size XL: Chiều cao từ 1m85 trở lên, cân nặng dưới 120kg
+          <br />
+          <br />
+          Các bạn vui lòng tham khảo bảng size chart trước khi đặt hàng.
+          <br />* Lưu ý: Hạn chế sử dụng máy sấy nhiệt cao để giữ form áo.
         </div>
       </div>
-      {/* <!-- end right  --> */}
     </div>
   );
 };

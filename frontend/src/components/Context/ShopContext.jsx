@@ -37,7 +37,7 @@ const ShopContextProvider = (props) => {
   const addToCart = (itemId, size) => {
     setCartItems((prev) => {
       const newCartItems = { ...prev };
-      if (!newCartItems[itemId]) {
+      if (typeof newCartItems[itemId] !== "object") {
         newCartItems[itemId] = {};
       }
       if (!newCartItems[itemId][size]) {

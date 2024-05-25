@@ -25,6 +25,12 @@ const Sidebar = () => {
           <p>List receipt</p>
         </div>
       </Link>
+      <Link to="/liststatistic" style={{ textDecoration: "none" }}>
+        <div className="sidebar-item">
+          <img src={list_product_icon} alt="List product icon" />
+          <p>List receipt</p>
+        </div>
+      </Link>
     </div>
   );
 };

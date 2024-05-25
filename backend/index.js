@@ -115,7 +115,6 @@ app.post("/addproduct", async (req, res) => {
     name: req.body.name,
   });
 });
-
 // Endpoint xóa sản phẩm
 app.post("/removeproduct", async (req, res) => {
   await Product.findOneAndDelete({ id: req.body.id });
@@ -270,6 +269,29 @@ app.post("/getcart", fetchUser, async (req, res) => {
   let userData = await Users.findOne({ _id: req.user.id });
   res.json(userData.cartData);
 });
+// Endpoint để cập nhật giá sản phẩm
+app.post("/updateproductprice", async (req, res) => {
+  const { id, field, value } = req.body;
+
+  try {
+    const product = await Product.findOne({ id });
+
+    if (!product) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Không tìm thấy sản phẩm" });
+    }
+
+    product[field] = value;
+    await product.save();
+
+    res.json({ success: true, message: "Cập nhật giá sản phẩm thành công" });
+  } catch (error) {
+    console.error("Lỗi trong quá trình cập nhật giá sản phẩm:", error);
+    res.status(500).json({ success: false, message: "Lỗi máy chủ nội bộ" });
+  }
+});
+
 // Schema cho Order
 const Order = mongoose.model("Order", {
   userId: {
