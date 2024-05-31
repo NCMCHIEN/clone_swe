@@ -13,6 +13,7 @@ import kid_banner from "./components/Assets/banner_kids.png";
 import Item from "./components/Item/Item";
 import { NewCollections } from "./components/NewCollections/NewCollections";
 import { BestSellers } from "./components/BestSellers/BestSellers";
+import CheckOut from "./components/CheckOut/CheckOut";
 
 function App() {
   return (
@@ -43,6 +44,7 @@ function App() {
           />
           <Route path="/Item" element={<Item />} />
           <Route path="/NewCollections" element={<NewCollections />} />
+          <Route path="/CheckOut" element={<CheckOut />} />
           <Route path="/BestSellers" element={<BestSellers />} />
           <Route path="product" element={<Product />}>
             <Route path=":productId" element={<Product />} />

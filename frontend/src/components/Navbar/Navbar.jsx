@@ -17,6 +17,9 @@ const Navbar = () => {
   return (
     <div className="swe-header">
       <div className="nav-menu">
+        <Link to="/CheckOut">
+          <p>test checkout</p>
+        </Link>
         <Link to="/mens">
           <p>men's</p>
         </Link>

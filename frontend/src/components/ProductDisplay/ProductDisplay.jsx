@@ -38,7 +38,7 @@ export const ProductDisplay = (props) => {
           </p>
         </div>
         <div className="select-size">
-          <p>Vui lòng chọn kích thước</p>
+          <p>please select size</p>
           <div className="select-size-button">
             {["S", "M", "L", "XL"].map((size) => (
               <button
@@ -50,7 +50,7 @@ export const ProductDisplay = (props) => {
               </button>
             ))}
           </div>
-          <p>Số lượng còn lại: {product.quantity}</p>
+          <p>remaining balance: {product.quantity}</p>
         </div>
         {product.quantity > 0 && (
           <div className="button-detail">
@@ -64,7 +64,7 @@ export const ProductDisplay = (props) => {
                 }
               }}
             >
-              Thêm vào giỏ hàng
+              add to bag
             </button>
             <button className="button-detail-help">help me!</button>
           </div>

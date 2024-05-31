@@ -153,31 +153,8 @@ export const CartItems = () => {
               <h3>{formatCurrency(getTotalCartAmount())}₫</h3>
             </div>
           </div>
-          <div className="contact-info">
-            <h2>Thông tin liên hệ</h2>
-            <input
-              type="text"
-              placeholder="Số điện thoại"
-              value={phoneNumber}
-              onChange={(e) => setPhoneNumber(e.target.value)}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Địa chỉ"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              required
-            />
-          </div>
+
           <button onClick={handleCheckout}>TIẾN HÀNH THANH TOÁN</button>
-        </div>
-        <div className="cartitems-promocode">
-          <p>Nếu bạn có mã khuyến mãi, hãy nhập vào đây</p>
-          <div className="cartitems-promobox">
-            <input type="text" placeholder="mã khuyến mãi" />
-            <button>Nộp</button>
-          </div>
         </div>
       </div>
     </div>

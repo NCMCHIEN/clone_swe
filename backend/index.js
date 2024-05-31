@@ -292,7 +292,6 @@ app.post("/updateproductprice", async (req, res) => {
   }
 });
 
-// Schema cho Order
 const Order = mongoose.model("Order", {
   userId: {
     type: String,
@@ -313,6 +312,14 @@ const Order = mongoose.model("Order", {
     type: String,
     required: true,
   },
+  fullname: {
+    type: String,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
   date: {
     type: Date,
     default: Date.now,
@@ -321,13 +328,13 @@ const Order = mongoose.model("Order", {
 
 // Endpoint để xử lý mua hàng
 app.post("/purchase", fetchUser, async (req, res) => {
-  const { items, phoneNumber, address } = req.body;
+  const { items, phoneNumber, address, fullname, email } = req.body;
   const userId = req.user.id;
 
-  if (!phoneNumber || !address) {
+  if (!phoneNumber || !address || !fullname || !email) {
     return res.status(400).json({
       success: false,
-      message: "Vui lòng cung cấp số điện thoại và địa chỉ",
+      message: "Vui lòng cung cấp số điện thoại, địa chỉ, họ tên và email",
     });
   }
 
@@ -342,43 +349,29 @@ app.post("/purchase", fetchUser, async (req, res) => {
       items,
       phoneNumber,
       address,
+      fullname,
+      email,
     });
     await order.save({ session });
 
-    // Cập nhật số lượng sản phẩm trong kho
-    for (const item of items) {
-      const product = await Product.findOne({ id: item.productId }).session(
-        session
-      );
-      if (product) {
-        if (product.quantity >= item.quantity) {
-          product.quantity -= item.quantity;
-          product.sold += item.quantity; // Cập nhật số lượng đã bán
-          await product.save({ session });
-        } else {
-          await session.abortTransaction();
-          return res.status(400).json({
-            success: false,
-            message: `Không đủ số lượng cho sản phẩm ID ${item.productId}`,
-          });
-        }
-      } else {
-        await session.abortTransaction();
-        return res.status(404).json({
-          success: false,
-          message: `Không tìm thấy sản phẩm với ID ${item.productId}`,
-        });
-      }
-    }
-
-    // Commit giao dịch
+    // Commit the transaction
     await session.commitTransaction();
     session.endSession();
 
-    res.json({ success: true, message: "Mua hàng thành công!" });
+    res.json({
+      success: true,
+      message: "Đơn hàng đã được tạo thành công",
+      order,
+    });
   } catch (error) {
-    console.error("Lỗi trong quá trình mua hàng:", error);
-    res.status(500).json({ success: false, message: "Lỗi máy chủ nội bộ" });
+    // Rollback transaction if any error occurs
+    await session.abortTransaction();
+    session.endSession();
+    res.status(500).json({
+      success: false,
+      message: "Có lỗi xảy ra trong quá trình tạo đơn hàng",
+      error: error.message,
+    });
   }
 });
 

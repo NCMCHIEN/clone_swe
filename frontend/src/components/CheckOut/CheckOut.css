@@ -1,0 +1,81 @@
+.checkout-container {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 80px;
+}
+.left-checkout {
+  background-color: white;
+  line-height: 5px;
+  width: 45%;
+  padding: 20 px;
+  padding-right: 70px;
+  border-right: 1px solid black;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+.left-checkout > input {
+  line-height: 1.5;
+  padding: 10px;
+  width: calc(100% - 22px);
+  border-radius: 4px;
+  border: solid 1px #ccc;
+  margin-bottom: 10px;
+}
+.left-checkout > input.error {
+  border-color: red;
+}
+.left-checkout > p.error-message {
+  color: red;
+  font-size: 14px;
+  margin: 5px 10px 0 10px;
+}
+.checkbox-finish {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+.checkbox-finish > a {
+  text-decoration: none;
+  color: #338dbc;
+}
+.checkbox-finish > button {
+  background-color: #338dbc;
+  border: none;
+  padding: 1.4em 1.7em;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}
+.checkbox-finish > button:hover {
+  background-color: #3fa0d5;
+  color: white;
+}
+.checkout-ship {
+  position: relative;
+  display: inline-block;
+}
+.checkout-ship-cod {
+  padding-right: 25px;
+}
+.checkout-ship-checkbox {
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.right-checkout {
+  background-color: white;
+  width: 45%; /* Adjust the width to fit better with the left-checkout */
+  margin-top: 40px;
+  padding: 20px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  box-sizing: border-box;
+}
+.product-checkout {
+  display: flex;
+  justify-content: space-around;
+}
+.subtotal,
+.total {
+  display: flex;
+  justify-content: space-around;
+}

@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <!-- <link rel="icon" type="image/svg+xml" href="/vite.svg" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="icon"
+      href="https://theme.hstatic.net/1000344185/1001008743/14/favicon.png?v=607"
+    />
+
     <title>swe</title>
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
@@ -26,6 +31,64 @@
     });
     function openPopup() {
       document.getElementById("pop-up-1").classList.toggle("active");
+    }
+    function validateForm() {
+      const fullname = document.getElementById("fullname");
+      const email = document.getElementById("email");
+      const phone = document.getElementById("phone");
+      const address = document.getElementById("address");
+
+      const fullnameError = document.getElementById("fullname-error");
+      const emailError = document.getElementById("email-error");
+      const phoneError = document.getElementById("phone-error");
+      const addressError = document.getElementById("address-error");
+
+      let isValid = true;
+
+      // Validate Fullname
+      if (fullname.value.trim() === "") {
+        fullname.classList.add("error");
+        fullnameError.textContent = "Please enter your name";
+        isValid = false;
+      } else {
+        fullname.classList.remove("error");
+        fullnameError.textContent = "";
+      }
+
+      // Validate Email
+      if (email.value.trim() === "") {
+        email.classList.add("error");
+        emailError.textContent = "Email can't be blank";
+        isValid = false;
+      } else {
+        email.classList.remove("error");
+        emailError.textContent = "";
+      }
+
+      // Validate Phone
+      if (phone.value.trim() === "") {
+        phone.classList.add("error");
+        phoneError.textContent = "Phone number can't be blank";
+        isValid = false;
+      } else {
+        phone.classList.remove("error");
+        phoneError.textContent = "";
+      }
+
+      // Validate Address
+      if (address.value.trim() === "") {
+        address.classList.add("error");
+        addressError.textContent = "Address can't be blank";
+        isValid = false;
+      } else {
+        address.classList.remove("error");
+        addressError.textContent = "";
+      }
+
+      //
+      if (isValid) {
+        alert("Checkout succesfully!");
+      }
     }
   </script>
 </html>
