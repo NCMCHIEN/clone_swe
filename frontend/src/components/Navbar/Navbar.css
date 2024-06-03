@@ -1,6 +1,6 @@
 .swe-header {
   position: sticky;
-  top: 0; /* Đảm bảo header dính vào đỉnh trang */
+  top: 0;
   display: flex;
   justify-content: space-between;
   text-align: center;
@@ -8,10 +8,15 @@
   margin: auto;
   padding-top: 20px;
   padding-bottom: 20px;
-  transition: top 0.3s; /* Thời gian và kiểu chuyển động */
-  -webkit-transition: top 0.5s; /* Thêm tiền tố -webkit- */
+  transition: top 0.3s;
+  -webkit-transition: top 0.5s;
   z-index: 2;
   font-weight: bold;
+}
+
+.nav-menu-container {
+  display: flex;
+  align-items: center;
 }
 
 .nav-menu {
@@ -21,20 +26,25 @@
   gap: 20px;
   padding-left: 10px;
 }
+
 .nav-menu a {
   text-decoration: none;
   margin-right: 20px;
-  color: black; /* Màu mặc định */
+  color: black;
 }
 
 .nav-menu a:hover {
-  color: orange; /* Màu khi hover */
+  color: orange;
 }
+
 .nav-menu p {
   font-size: 18px;
-  /* font-weight: bold; */
   max-width: 100px;
 }
+.nav-menu-account {
+  display: none;
+}
+
 .nav-logo {
   display: inline-block;
 }
@@ -44,18 +54,26 @@
   height: 42px;
   margin-right: 270px;
 }
+
+.nav-logo img:nth-of-type(2) {
+  display: none;
+}
+
 .nav-sign {
   display: flex;
   align-items: center;
   justify-content: flex-end;
   gap: 20px;
 }
+
 .nav-sign a {
   color: #000;
 }
+
 .nav-sign a:hover {
   color: orange;
 }
+
 .nav-sign-button {
   width: 100px;
   background-color: white;
@@ -63,150 +81,35 @@
   margin-right: 1%;
   cursor: pointer;
 }
-/* .nav-sign-button p {
-  width: 100px;
-  background-color: white;
-  border: none;
-  margin-right: 1%;
-  cursor: pointer;
-} */
+
 .nav-sign p {
   font-size: 18px;
-  /* font-weight: bold; */
   max-width: 100px;
-  position: relative; /* Đảm bảo các phần tử con có thể sử dụng position: absolute tương đối với nav-sign */
+  position: relative;
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .nav-sign p:hover {
   color: orange;
   cursor: pointer;
 }
+
 .logout {
   cursor: pointer;
 }
+
 .logout:hover {
   color: orange;
 }
 
-.pop-up {
-  width: 0px;
-}
-.pop-up .overlay {
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-  display: none;
-}
-.pop-up .content {
-  position: absolute;
-  top: 50%;
-  right: 15%;
-  transform: translate(50%, -50%) scale(0.5);
-  background: #fff;
-  width: 450px;
-  height: 1000px;
-  margin-top: 135px;
-  z-index: 2;
-  text-align: center;
-  box-sizing: border-box;
-  opacity: 0; /* Bắt đầu với opacity là 0 */
-  transition: all 0.5s ease-in-out; /* Thời gian chuyển động 0.5s */
-}
-
-.pop-up .content h1 {
-  display: flex;
-  justify-content: flex-start;
-  padding: 10px;
-}
-
-.pop-up .close-btn {
-  position: absolute;
-  right: 20px;
-  top: 20px;
-  width: 30px;
-  height: 30px;
-  margin-right: 20px;
-  /* background: #222; */
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 30px;
-  text-align: center;
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.pop-up.active .overlay {
-  display: block;
-}
-.pop-up.active .content {
-  opacity: 1; /* Khi active, opacity là 1 */
-  transform: translate(50%, -50%) scale(1); /* Khi active, scale lớn hơn */
-}
-.product-render {
-  display: grid;
-  grid-template-columns: 1fr; /* Chia thành một cột duy nhất */
-  gap: 20px; /* Khoảng cách giữa các sản phẩm */
-}
-.pop-up-bag {
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  /* background-color: #000; */
-  /* height: 80px; */
-  /* margin-bottom: 10px; */
-}
-.pop-up-bag-img img {
-  width: 100px;
-  height: 100px;
-}
-.pop-up-bag-name p {
-  font-size: 16px;
-  font-weight: bold;
-}
-.pop-up-bag-name p:nth-of-type(2) {
-  margin-top: 30px;
-}
-.pop-up-bag-price button {
-  width: 30px;
-  height: 30px;
-  border: none;
-  background-color: white;
-}
-.pop-up-bag-price p {
-  margin-top: 30px;
-}
-
-.content hr:nth-of-type(2) {
-  width: 50%;
-}
-.total {
+.button-detail-bag {
   margin-top: 20px;
   display: flex;
   justify-content: space-around;
 }
 
-.total-left {
-  display: flex;
-  justify-content: flex-start;
-}
-
-.pop-up .content h1:nth-of-type(2) {
-  display: flex;
-  justify-content: flex-start;
-  font-size: 18px;
-  font-weight: normal;
-}
-.button-detail-bag {
-  margin-top: 20px;
-  display: flex; /* Sử dụng flexbox để nút nằm trên cùng một hàng */
-  justify-content: space-around; /* Canh giữa các phần tử trong hàng */
-}
 .button-detail-continueshopping,
 .button-detail-checkout {
   margin-right: 10px;
@@ -223,8 +126,108 @@
   font-weight: bold;
   transition: all 300ms ease-in-out;
 }
+
 .button-detail-continueshopping:hover,
 .button-detail-checkout:hover {
   background-color: white;
   color: #000;
+}
+
+.close-sidebar-button,
+.btn-open,
+.btn-shopping-cart {
+  display: none;
+}
+
+/* Thêm lớp overlay cho lớp nền mờ */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+  z-index: 5; /* Đảm bảo lớp phủ nằm trên cùng */
+  display: none; /* Mặc định là ẩn */
+}
+
+/* Hiển thị lớp màng mờ khi thêm lớp .show */
+.overlay.show {
+  display: block;
+}
+
+@media (max-width: 700px) {
+  .nav-menu {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 250px; /* Giảm chiều rộng */
+    height: 100%;
+    background-color: white;
+    box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
+    gap: 10px; /* Giảm khoảng cách giữa các mục */
+    padding: 10px; /* Giảm padding */
+  }
+
+  .nav-menu.show {
+    display: flex;
+  }
+
+  .nav-menu a {
+    color: black;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px 5px; /* Giảm padding */
+  }
+
+  .close-sidebar-button {
+    display: block;
+    color: black;
+    background-color: white;
+    border: none;
+    margin-top: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+  }
+
+  .btn-open {
+    display: block;
+    color: #000;
+    font-size: 24px;
+    margin-left: 15px;
+    background-color: white;
+    border: none;
+  }
+
+  .nav-logo img:nth-of-type(1) {
+    display: none;
+  }
+
+  .nav-logo img:nth-of-type(2) {
+    display: block;
+    width: 132px;
+    height: 42px;
+    margin: auto;
+    margin-left: 40px;
+  }
+
+  .nav-sign p:nth-of-type(1),
+  .nav-sign p:nth-of-type(2) {
+    display: none;
+  }
+
+  .btn-shopping-cart {
+    font-size: 30px;
+    display: block;
+    margin-right: 20px;
+  }
+  .nav-menu-account {
+    display: block;
+    margin-left: 6px;
+  }
 }

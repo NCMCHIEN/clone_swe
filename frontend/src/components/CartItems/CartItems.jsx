@@ -1,6 +1,8 @@
 import React, { useContext, useState } from "react";
 import "./CartItems.css";
 import { ShopContext } from "../Context/ShopContext";
+import { Link } from "react-router-dom";
+
 import remove_icon from "../Assets/cart_cross_icon.png";
 
 export const CartItems = () => {
@@ -88,14 +90,15 @@ export const CartItems = () => {
 
   return (
     <div className="cartitems">
+      <h4>shopping bag</h4>
       <div className="cartitems-format-main">
-        <p>Sản phẩm</p>
-        <p>Tiêu đề</p>
-        <p>Kích thước</p>
-        <p>Giá</p>
-        <p>Số lượng</p>
-        <p>Tổng</p>
-        <p>Xóa</p>
+        <p>Product</p>
+        <p>Title</p>
+        <p>Size</p>
+        <p>Price</p>
+        <p>Quantity</p>
+        <p>Total</p>
+        <p>Delete</p>
       </div>
       <hr />
       {all_product.map((product) => {
@@ -136,25 +139,15 @@ export const CartItems = () => {
       })}
       <div className="cartitems-down">
         <div className="cartitems-total">
-          <h1>Tổng giỏ hàng</h1>
-          <div>
-            <div className="cartitems-total-item">
-              <p>Tổng phụ</p>
-              <p>{formatCurrency(getTotalCartAmount())}</p>
-            </div>
-            <hr />
-            <div className="cartitems-total-item">
-              <p>Phí vận chuyển</p>
-              <p>Miễn phí</p>
-            </div>
-            <hr />
-            <div className="cartitems-total-item">
-              <h3>Tổng cộng</h3>
-              <h3>{formatCurrency(getTotalCartAmount())}₫</h3>
-            </div>
+          <div className="cartitems-total-item">
+            <h3>total</h3>
+            <h3>{formatCurrency(getTotalCartAmount())}₫</h3>
           </div>
-
-          <button onClick={handleCheckout}>TIẾN HÀNH THANH TOÁN</button>
+          <div className="cartitems-checkout">
+            <Link to="/CheckOut">
+              <button onClick={handleCheckout}>check out</button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

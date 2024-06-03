@@ -12,6 +12,17 @@
   border-right: 1px solid black;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
+.breadcrum-checkout {
+  font-size: 13px;
+}
+.breadcrum-checkout a {
+  text-decoration: none;
+  color: #338dbc;
+}
+.breadcrum-checkout a:hover,
+.checkbox-finish a:hover {
+  color: #3fa0d5;
+}
 .left-checkout > input {
   line-height: 1.5;
   padding: 10px;
@@ -19,6 +30,10 @@
   border-radius: 4px;
   border: solid 1px #ccc;
   margin-bottom: 10px;
+  outline: none;
+}
+.left-checkout > input:focus {
+  border: solid 3px #3fa0d5;
 }
 .left-checkout > input.error {
   border-color: red;
@@ -26,7 +41,7 @@
 .left-checkout > p.error-message {
   color: red;
   font-size: 14px;
-  margin: 5px 10px 0 10px;
+  margin: 0px 10px 14px 10px;
 }
 .checkbox-finish {
   display: flex;

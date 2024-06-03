@@ -5,12 +5,13 @@ import { Link } from "react-router-dom";
 import { ShopContext } from "../Context/ShopContext";
 
 export const CheckOut = () => {
-  const { all_product, cartItems, getTotalCartAmount } =
+  const { all_product, cartItems, getTotalCartAmount, clearCart } =
     useContext(ShopContext);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
   const [fullname, setFullname] = useState("");
+  const [errors, setErrors] = useState({});
 
   const cartProducts = all_product.filter((product) =>
     Object.keys(cartItems[product.id] || {}).some(
@@ -27,28 +28,50 @@ export const CheckOut = () => {
     }))
   );
 
-  const handleCheckout = async () => {
-    try {
-      const response = await fetch("http://localhost:4010/purchase", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token": localStorage.getItem("auth-token"),
-        },
-        body: JSON.stringify({ items, phoneNumber, address, fullname, email }),
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || "Network response was not ok");
-      }
-
-      // Xử lý sau khi thanh toán thành công
-      console.log("Thanh toán thành công");
-    } catch (error) {
-      console.error("Thanh toán thất bại:", error);
-    }
+  const validateForm = () => {
+    const newErrors = {};
+    if (!fullname.trim()) newErrors.fullname = "Vui lòng nhập tên của bạn";
+    if (!email.trim()) newErrors.email = "Email không được để trống";
+    if (!phoneNumber.trim())
+      newErrors.phoneNumber = "Số điện thoại không được để trống";
+    if (!address.trim()) newErrors.address = "Địa chỉ không được để trống";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
+
+  async function validateAndCheckout() {
+    if (validateForm()) {
+      try {
+        const response = await fetch("http://localhost:4010/purchase", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("auth-token"),
+          },
+          body: JSON.stringify({
+            items: items, // Đặt mảng items của bạn ở đây
+            phoneNumber: phoneNumber,
+            address: address,
+            fullname: fullname,
+            email: email,
+          }),
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Network response was not ok");
+        }
+
+        // Xử lý sau khi thanh toán thành công
+        alert("Thanh toán thành công!");
+        clearCart();
+      } catch (error) {
+        console.error("Thanh toán thất bại:", error);
+        alert("Thanh toán thất bại. Vui lòng thử lại.");
+      }
+    }
+  }
+
   const formatCurrency = (value) => {
     if (!value) return value;
     const stringValue = value.toString();
@@ -63,9 +86,10 @@ export const CheckOut = () => {
         <h1>SWE (STREETWEAREAZY)</h1>
         <br />
         <div className="breadcrum-checkout">
-          <Link to="/cart">cart</Link> <img src={arrow_icon} alt="" /> Shipping
+          <Link to="/cart">Cart</Link> <img src={arrow_icon} alt="" /> Shipping
           Information
         </div>
+        <br />
         <br />
         <p>Shipping Information</p>
         <br />
@@ -76,28 +100,36 @@ export const CheckOut = () => {
           value={fullname}
           onChange={(e) => setFullname(e.target.value)}
         />
-        <p className="error-message" id="fullname-error"></p>
+        <p className="error-message" id="fullname-error">
+          {errors.fullname}
+        </p>
         <input
           type="text"
           placeholder="Phone"
           value={phoneNumber}
           onChange={(e) => setPhoneNumber(e.target.value)}
         />
-        <p className="error-message" id="phone-error"></p>
+        <p className="error-message" id="phone-error">
+          {errors.phoneNumber}
+        </p>
         <input
           type="text"
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
-        <p class="error-message" id="email-error"></p>
+        <p className="error-message" id="email-error">
+          {errors.email}
+        </p>
         <input
           type="text"
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
         />
-        <p className="error-message" id="address-error"></p>
+        <p className="error-message" id="address-error">
+          {errors.address}
+        </p>
         <p>Payment Method</p>
         <br />
 
@@ -106,7 +138,7 @@ export const CheckOut = () => {
         </div>
         <div className="checkbox-finish">
           <Link to="/cart">cart</Link>
-          <button onClick={handleCheckout}>Finish your order</button>
+          <button onClick={validateAndCheckout}>Finish your order</button>
         </div>
         <br />
         <br />
@@ -123,7 +155,7 @@ export const CheckOut = () => {
               height="100px"
             />
             <p>{product.name}</p>
-            <p>{product.new_price} vnd</p>
+            <p>{product.new_price}₫</p>
           </div>
         ))}
         <hr style={{ width: "590px" }} />

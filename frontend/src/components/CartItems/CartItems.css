@@ -1,7 +1,12 @@
 .cartitems {
   margin: 100px 170px;
 }
-
+.cartitems h4 {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
 .cartitems hr {
   height: 3px;
   background: black;
@@ -56,7 +61,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  margin-right: 200px;
+  /* margin-right: 200px;  */
   gap: 40px;
 }
 
@@ -65,53 +70,18 @@
   justify-content: space-between;
   padding: 15px 0;
 }
-
+.cartitems-checkout {
+  text-align: right;
+}
 .cartitems-total button {
-  width: 262px;
-  height: 58px;
+  width: 100px;
+  height: 40px;
   outline: none;
   border: none;
-  background: #ff5a5a;
+  background: black;
+  border-radius: 7px;
   color: #fff;
   font-size: 16px;
   font-weight: 600;
-  cursor: pointer;
-}
-
-.cartitems-promocode {
-  flex: 1;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.cartitems-promocode p {
-  color: #555;
-}
-
-.cartitems-promobox {
-  width: 504px;
-  margin-top: 15px;
-  padding-left: 20px;
-  height: 58px;
-  background: #eaeaea;
-  display: flex; /* Sử dụng flexbox để canh giữa input và button */
-  align-items: center;
-}
-
-.cartitems-promobox input {
-  border: none;
-  outline: none;
-  background: transparent;
-  font-size: 16px;
-  width: 100%; /* Để input chiếm toàn bộ không gian trống */
-  margin-right: 10px; /* Khoảng cách giữa input và button */
-}
-
-.cartitems-promobox button {
-  width: 170px;
-  height: 58px;
-  font-size: 16px;
-  background: black;
-  color: white;
   cursor: pointer;
 }

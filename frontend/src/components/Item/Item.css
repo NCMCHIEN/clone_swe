@@ -77,6 +77,9 @@
   height: 100%; /* Chiều cao 100% của item */
 }
 
+.name-product {
+  margin-left: 35px;
+}
 /* Định dạng cho tên sản phẩm */
 .name-product a {
   text-decoration: none;

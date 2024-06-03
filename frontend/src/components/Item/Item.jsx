@@ -27,9 +27,9 @@ const Item = (props) => {
             <div className="product-img">
               <div className="item-img-1">
                 <img src={props.image} alt="Product" />
-                <div className="item-img-2">
+                {/* <div className="item-img-2">
                   <img src={props.image_second} alt="Product" />
-                </div>
+                </div> */}
               </div>
             </div>
             <div className="product-info">
@@ -43,11 +43,11 @@ const Item = (props) => {
                   <p className="price-discount">-{discountPercentage}%</p>
                 )}
                 <p className="price-product-sale">
-                  {formatCurrency(props.new_price)} VND
+                  {formatCurrency(props.new_price)}₫
                 </p>
                 {props.old_price !== 0 && (
                   <p className="price-product-offer">
-                    {formatCurrency(props.old_price)} VND
+                    {formatCurrency(props.old_price)}₫
                   </p>
                 )}
               </div>

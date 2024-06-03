@@ -7,7 +7,7 @@
   text-align: center;
   margin: auto;
   padding: 20px 10px 10px; /* Tích hợp padding thành một dòng */
-  z-index: 1;
+  z-index: 3;
   background-color: white;
 }
 
@@ -45,4 +45,15 @@
   font-size: 16px;
   font-weight: bold;
   max-width: 120px;
+}
+@media (max-width: 700px) {
+  .swe-footer {
+    flex-direction: column;
+    text-align: center;
+    /* margin: auto; */
+  }
+  .footer-logo {
+    margin: auto;
+    margin-bottom: 20px;
+  }
 }

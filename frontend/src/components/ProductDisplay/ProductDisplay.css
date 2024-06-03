@@ -96,3 +96,19 @@
   font-stretch: condensed;
   margin-bottom: 40px;
 }
+@media (max-width: 700px) {
+  .display-body {
+    flex-direction: column;
+    margin-left: 10%;
+    width: auto;
+  }
+  .display-left-content > p > img {
+    width: 350px;
+    height: 350px;
+  }
+  .infoabout-shirt {
+    width: 100%; /* Đặt chiều rộng của infoabout-shirt thành 100% để nó tự động điều chỉnh chiều rộng tương ứng với phần tử chứa */
+    font-size: 14px; /* Điều chỉnh kích thước phông chữ */
+    margin-bottom: 20px; /* Giảm khoảng cách dưới cùng */
+  }
+}
