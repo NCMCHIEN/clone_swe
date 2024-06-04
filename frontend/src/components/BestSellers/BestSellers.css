@@ -24,3 +24,11 @@
   margin-top: 50px;
   gap: 19px;
 }
+@media (max-width: 700px) {
+  .new-bestsellers {
+    width: 100%;
+  }
+  .bestsellers {
+    grid-template-columns: 1fr;
+  }
+}

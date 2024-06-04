@@ -24,3 +24,12 @@
   margin-top: 50px;
   gap: 19px;
 }
+
+@media (max-width: 700px) {
+  .new-collections {
+    width: 100%;
+  }
+  .collections {
+    grid-template-columns: 1fr;
+  }
+}

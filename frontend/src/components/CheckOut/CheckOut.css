@@ -94,3 +94,18 @@
   display: flex;
   justify-content: space-around;
 }
+@media (max-width: 700px) {
+  .checkout-container {
+    flex-direction: column;
+    margin-bottom: 80px;
+  }
+  .left-checkout {
+    background-color: white;
+    line-height: 5px;
+    width: 100%;
+    padding: 20 px;
+    padding-right: 70px;
+    border-right: 1px solid black;
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+  }
+}
